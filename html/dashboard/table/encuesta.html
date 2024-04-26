@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Formulario de Registro</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://www.sicep.cl/favicon.ico">
+<link href="style.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color: #F2F3F4;">
+  <div class="img-cabecera mt-5 mb-5" style="text-align: center;">
+    <img src="https://www.pruebadyc.cl/AIA.png" style="width: 150px; height: auto;">
+    <img src="https://www.pruebadyc.cl/cochilco.png" style="width: 150px; height: auto;">
+    <img src="https://www.pruebadyc.cl/Marca-AIA.png" style="width: 150px; height: auto;">
+    
+  </div>
+
+  <!-- Contenedor del formulario -->
+  <h1 class="mb-5">Formulario de Evaluación - Cadena de Valor Minero</h1>
+  <form id="sustainability-form"  name="sustainability-form" method="post" action="guardarPrimeraSeccion.php" onsubmit="return validarSeleccion2()">
+    <div id="registration-form">
+      <ul id="step-indicator">
+        <h2><li class="active" >Abastecimiento Sostenible Proveedores</li></h2>
+      </ul>
+
+      <!-- Sección de la cuenta -->
+      <div id="sustainability-form-section" class="form-section active">
+        <h3>Abastecimiento Sostenible en la Minería</h3>
+        <form id="sustainability-form">
+          <!-- Información de la Empresa -->
+          <div class="form-group">
+            <label for="company-name" class="form-label">Nombre de la empresa:</label>
+            <input type="text" class="form-control" id="company-name" name="company_name" placeholder="Nombre SpA-ltda-SA-EIRL" required>
+          </div>
+          <div class="form-group">
+            <label for="company-rut" class="form-label">Rut Empresa:</label>
+            <input type="text" class="form-control" id="company-rut" name="company_rut" placeholder="0000000-0" required>
+            <span id="rut-error-message" class="text-danger"></span> <!-- Elemento para mostrar el mensaje de error -->
+          </div>
+
+          <script>
+            document.getElementById("company-rut").addEventListener("blur", function() {
+                var rut = this.value;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "verificar_rut2.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (xhr.responseText == "existe") {
+                            document.getElementById("rut-error-message").textContent = "El RUT ya respondio la encuesta, si desea modificar o eliminar sus respuesta por favor contactese con Raúl Rodriguez, telefono: 552 454312; Email: rrodriguez@sicep.cl";
+                            document.getElementById("company-rut").value = ""; // Limpiar el campo
+                        } else {
+                            document.getElementById("rut-error-message").textContent = ""; // Limpiar el mensaje de error
+                        }
+                    }
+                };
+                xhr.send("rut=" + rut);
+            });
+
+
+          </script>
+          <!-- Proegunta 1 -->
+          <div class="form-group" id="miFormulario" >
+            <fieldset>
+              <legend>Procesos de la cadena de valor minero en la que sus producto(s)/servicio(s) es(son) ofertado(s). (Puede seleccionar hasta 3 opciones).</legend>
+              
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Exploración y Geociencias" id="exploracion-geociencias">
+                <label class="form-check-label" for="exploracion-geociencias">Exploración y Geociencias</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Planificacion Minera" id="planificacion-minera">
+                <label class="form-check-label" for="planificacion-minera">Planificación Minera</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Mina Rajo" id="mina-rajo">
+                <label class="form-check-label" for="mina-rajo">Mina Rajo</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Mina Subterránea" id="mina-subterranea">
+                <label class="form-check-label" for="mina-subterranea">Mina Subterránea</label>
+              </div>
+              <!-- ... -->
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Proceso hidrometalúrgico" id="proceso-hidrometalurgico">
+                <label class="form-check-label" for="proceso-hidrometalurgico">Proceso hidrometalúrgico</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Proceso de concentración de minerales" id="proceso-concentracion-minerales">
+                <label class="form-check-label" for="proceso-concentracion-minerales">Proceso de concentración de minerales</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Fundición" id="fundicion">
+                <label class="form-check-label" for="fundicion">Fundición</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Refinería electrolítica" id="refineria-electrolitica">
+                <label class="form-check-label" for="refineria-electrolitica">Refinería electrolítica</label>
+              </div>
+              <!-- ... -->
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Relaves" id="relaves">
+                <label class="form-check-label" for="relaves">Relaves</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Comercialización" id="comercializacion">
+                <label class="form-check-label" for="comercializacion">Comercialización</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Nuevos usos del cobre" id="nuevos-usos-cobre">
+                <label class="form-check-label" for="nuevos-usos-cobre">Nuevos usos del cobre</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Transversal (proveedor que opera en toda la cadena de valor minera)" id="transversal">
+                <label class="form-check-label" for="transversal">Transversal (proveedor que opera en toda la cadena de valor minera)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input valor-minero-checkbox" type="checkbox" name="valor_minero[]" value="Minería NO metálica" id="mineria-no-metalica">
+                <label class="form-check-label" for="mineria-no-metalica">Minería NO metálica</label>
+              </div>
+            </fieldset>
+            
+          </div>
+          
+           <!-- Proegunta 2 -->
+          <div class="form-group" id="miFormulario">
+            <fieldset>
+              <legend>¿En cuáles de las siguientes categorías se enmarca la oferta de productos de su empresa? (Puede seleccionar hasta 3 opciones).</legend>
+              
+              <!-- Opciones existentes -->
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Arriendo de Equipos" id="arriendo-equipos">
+                <label class="form-check-label" for="arriendo-equipos">Arriendo de Equipos</label>
+              </div>
+              
+              <!-- Opciones nuevas -->
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Importación y ventas (equipos, partes y piezas)" id="importacion-ventas">
+                <label class="form-check-label" for="importacion-ventas">Importación y ventas (equipos, partes y piezas)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Fabricante local (equipos, partes y piezas)" id="fabricante-local">
+                <label class="form-check-label" for="fabricante-local">Fabricante local (equipos, partes y piezas)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Servicios en Terreno (ej: Mantención y reparación, servicios de apoyo a la operación)" id="servicios-terreno">
+                <label class="form-check-label" for="servicios-terreno">Servicios en Terreno (ej: Mantención y reparación, servicios de apoyo a la operación)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Servicios Administrativos (ej:contables, logísticos, seguridad, entre otros)" id="servicios-administrativos">
+                <label class="form-check-label" for="servicios-administrativos">Servicios Administrativos (ej:contables, logísticos, seguridad, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Otros Servicios (ej: consultorías, estudios, asesoría legal, entre otros)" id="otros-servicios">
+                <label class="form-check-label" for="otros-servicios">Otros Servicios (ej: consultorías, estudios, asesoría legal, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Softwares Transversales (ej: ERP, gestión de personas, gestión de proyectos, entre otros)" id="softwares-transversales">
+                <label class="form-check-label" for="softwares-transversales">Softwares Transversales (ej: ERP, gestión de personas, gestión de proyectos, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Softwares para Procesos Mineros (ej: planificación minera, exploración, gestión minera, entre otros)" id="softwares-procesos-mineros">
+                <label class="form-check-label" for="softwares-procesos-mineros">Softwares para Procesos Mineros (ej: planificación minera, exploración, gestión minera, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Hardware Transversales (componentes tecnológicos para procesos transversales)" id="hardware-transversales">
+                <label class="form-check-label" for="hardware-transversales">Hardware Transversales (componentes tecnológicos para procesos transversales)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input categoria-producto-checkbox" type="checkbox" name="categorias_productos[]" value="Hardware para Procesos Mineros (componentes tecnológicos mineros)" id="hardware-procesos-mineros">
+                <label class="form-check-label" for="hardware-procesos-mineros">Hardware para Procesos Mineros (componentes tecnológicos mineros)</label>
+              </div>
+            </fieldset>
+          </div>
+          
+          <!-- Proegunta 3 -->
+          <div class="form-group">
+            <label for="sustainable-supply" class="form-label">¿Su empresa aborda la temática de abastecimiento sostenible en la minería?</label><br>
+            <input type="radio" id="sustainable-yes" name="sustainable_supply" value="yes" required>
+            <label for="sustainable-yes">Sí</label>
+            <input type="radio" id="sustainable-no" name="sustainable_supply" value="no" required>
+            <label for="sustainable-no">No</label>
+            <br>
+            <br>
+            <div class="alert alert-primary" role="alert">
+                <small id="sustainable-help" class="form-text text-muted">El abastecimiento sostenible busca asegurar que los productos y servicios que se venden consideren criterios de sostenibilidad, con menor impacto y resultados económicos, ambientales y sociales positivos.</small>
+            </div>
+          </div>
+          
+          <!-- Proegunta 4 -->
+          <div class="form-group">
+            <label for="efficiency-improvement" class="form-label">¿Es posible mejorar la eficiencia en el consumo del producto que su empresa ofrece a la industria minera?</label><br>
+            <input type="radio" id="efficiency-yes" name="efficiency_improvement" value="yes" required>
+            <label for="efficiency-yes">Sí</label>
+            <input type="radio" id="efficiency-no" name="efficiency_improvement" value="no">
+            <label for="efficiency-no">No</label>
+            
+            <input type="radio" id="efficiency_improvement-no-se-ha-evaluado" name="efficiency_improvement" value="no-se-ha-evaluado">
+            <label for="sustainable-no-se-ha-evaluado">No se ha evaluado</label><br>
+          </div>
+
+          <!-- Pregunta 4 -->
+          <div class="form-group">
+            <label for="environmental-impact" class="form-label">¿Su empresa ha identificado los principales impactos ambientales y sociales del producto/servicio ofertado? Por ejemplo, residuos, energía, emisiones, agua, salud de los trabajadores, etc.<br><br><strong>Si la respuesta es "Sí", mencione cuáles</strong></label><br>
+            <input type="radio" id="impact-yes" name="environmental_impact" value="yes" required>
+            <label for="impact-yes">Sí</label>
+            <input type="radio" id="impact-no" name="environmental_impact" value="no">
+            <label for="impact-no">No</label><br>
+            <br>
+            <div class="impact-details" style="display:none;">
+              <label for="impact-details" class="form-label">Si la respuesta es "Sí", mencione cuáles:</label>
+              <input type="text" class="form-control" id="impact-details" name="impact_details">
+            </div>
+          </div>
+
+          <script>
+            document.querySelectorAll('input[name="environmental_impact"]').forEach((radio) => {
+              radio.addEventListener('change', function(event) {
+                var details = document.querySelector('.impact-details');
+                if (event.target.id === 'impact-yes') {
+                  details.style.display = 'block';
+                } else {
+                  details.style.display = 'none';
+                }
+              });
+            });
+          </script>
+
+
+          <!-- Pregunta 5 -->
+          <div class="form-group">
+            <label class="form-label">
+              Cuáles son los niveles de prioridad que su empresa asigna a los impactos ambientales y sociales? (Seleccione los niveles de prioridad pertinentes)
+            </label><br>
+            <br>
+            <table class="table priority-table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="low-priority">Baja Prioridad</th>
+                    <th scope="col" class="priority-1">1</th>
+                    <th scope="col" class="priority-2">2</th>
+                    <th scope="col" class="priority-3">3</th>
+                    <th scope="col" class="priority-4">4</th>
+                    <th scope="col" class="priority-5">5</th>
+                    <th scope="col" class="high-priority">Alta prioridad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ambientales</td>
+                    <td><input type="radio" name="priority_environmental" value="1"></td>
+                    <td><input type="radio" name="priority_environmental" value="2"></td>
+                    <td><input type="radio" name="priority_environmental" value="3"></td>
+                    <td><input type="radio" name="priority_environmental" value="4"></td>
+                    <td><input type="radio" name="priority_environmental" value="5"></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Sociales</td>
+                    <td><input type="radio" name="priority_social" value="1"></td>
+                    <td><input type="radio" name="priority_social" value="2"></td>
+                    <td><input type="radio" name="priority_social" value="3"></td>
+                    <td><input type="radio" name="priority_social" value="4"></td>
+                    <td><input type="radio" name="priority_social" value="5"></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+            </table>
+          </div><br>
+          <br>
+
+          <div class="form-group">
+            <label for="compliance-question" class="form-label">
+              ¿Su producto/proceso cumple con alguna norma, regulación o política existente?<br><br><strong>Si la respuesta es afirmativa especifique la norma/regulación/política</strong>
+            </label><br>
+            <input type="radio" id="compliance-yes" name="compliance" value="yes">
+            <label for="compliance-yes">Sí</label>
+            <input type="radio" id="compliance-no" name="compliance" value="no">
+            <label for="compliance-no">No</label><br>
+            <br>
+            <div class="compliance-details" style="display:none;">
+              <label for="compliance-details" class="form-label">
+                Si la respuesta es afirmativa especifique la norma/regulación/política:
+              </label><br>
+              <input type="text" class="form-control" placeholder="1.-" name="compliance_detail_1"><br>
+              <input type="text" class="form-control" placeholder="2.-" name="compliance_detail_2"><br>
+              <input type="text" class="form-control" placeholder="3.-" name="compliance_detail_3"><br>
+              <input type="text" class="form-control" placeholder="4.-" name="compliance_detail_4">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mining-info-question" class="form-label">
+              ¿Las empresas mineras informan en sus licitaciones cuáles son sus prioridades ambientales y/o sociales y políticas relevantes?<br><br><strong>Si la respuesta es "Sí", mencione cuáles</strong>
+            </label><br>
+            <input type="radio" id="mining-info-yes" name="mining_info" value="yes">
+            <label for="mining-info-yes">Sí</label>
+            <input type="radio" id="mining-info-no" name="mining_info" value="no">
+            <label for="mining-info-no">No</label><br>
+            <br>
+            <div class="mining-info-details" style="display:none;">
+              <label for="mining-info-details" class="form-label">
+                Si la respuesta es "Sí", mencione cuáles:
+              </label>
+              <input type="text" class="form-control" id="mining-info-details" name="mining_info_details">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="disposable-question" class="form-label">
+              Si el producto que oferta a la minería es desechable, ¿existen alternativas duraderas y no desechables que satisfacen la misma necesidad?
+            </label><br>
+            <input type="radio" id="disposable-yes" name="disposable" value="yes">
+            <label for="disposable-yes">Sí</label>
+            <input type="radio" id="disposable-no" name="disposable" value="no">
+            <label for="disposable-no">No</label>
+            <input type="radio" id="disposable_improvement-no-se-ha-evaluado" name="disposable" value="no-se-ha-evaluado">
+            <label for="sustainable-no-se-ha-evaluado">No se ha evaluado</label><br><br>
+          </div>
+          
+          
+          <script>
+            document.querySelectorAll('input[name="mining_info"]').forEach((radio) => {
+              radio.addEventListener('change', function(event) {
+                var infoDetails = document.querySelector('.mining-info-details');
+                if (event.target.id === 'mining-info-yes') {
+                  infoDetails.style.display = 'block';
+                } else {
+                  infoDetails.style.display = 'none';
+                }
+              });
+            });
+          </script>
+
+          <!-- Pregunta sobre consumo de energía -->
+          <div class="form-group">
+            <label for="energy-consumption-question" class="form-label">
+              Si su producto/servicio/proyecto consume energía durante su uso: ¿hay alternativas más eficientes energéticamente disponibles?
+            </label><br>
+            <input type="radio" id="energy-consumption-yes" name="energy_consumption" value="yes">
+            <label for="energy-consumption-yes">Sí</label>
+            <input type="radio" id="energy-consumption-no" name="energy_consumption" value="no">
+            <label for="energy-consumption-no">No</label>
+            <input type="radio" id="energy-consumption-not-evaluated" name="energy_consumption" value="not-evaluated">
+            <label for="energy-consumption-not-evaluated">No se ha evaluado</label><br>
+            <br>
+            <div class="energy-consumption-details" style="display:none;">
+              <label for="energy-consumption-details" class="form-label">
+                Si la respuesta es "Sí", mencione cuáles son las alternativas:
+              </label>
+              <input type="text" class="form-control" id="energy-consumption-details" name="energy_consumption_details">
+            </div>
+          </div>
+
+          <script>
+            document.querySelectorAll('input[name="energy_consumption"]').forEach((radio) => {
+              radio.addEventListener('change', function(event) {
+                var details = document.querySelector('.energy-consumption-details');
+                if (event.target.value === 'yes') {
+                  details.style.display = 'block';
+                } else {
+                  details.style.display = 'none';
+                }
+              });
+            });
+          </script>
+
+          <script>
+            document.querySelectorAll('input[name="compliance"]').forEach((radio) => {
+              radio.addEventListener('change', function(event) {
+                var complianceDetails = document.querySelector('.compliance-details');
+                if (event.target.id === 'compliance-yes') {
+                  complianceDetails.style.display = 'block';
+                } else {
+                  complianceDetails.style.display = 'none';
+                }
+              });
+            });
+          </script><br>
+          <br>
+          
+        <!-- Campos de información personal -->
+        
+        <button type="submit" class="btn btn-primary">Enviar</button>
+          
+          
+        </form>
+      </div>
+
+  </form>
+
+
+  <!-- Añade aquí tus scripts o enlaces a archivos de JavaScript -->
+ 
+  <script>
+    document.getElementById("company-rut").oninput = function() {
+        var rutPattern = /^\d{0,8}(-\d{0,1})?$/; // Permite escribir hasta 8 dígitos y opcionalmente el guión y el dígito verificador
+    
+        if (!rutPattern.test(this.value)) {
+            this.value = this.value.slice(0, -1); // Eliminar el último caracter no válido
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+    // Obtener todos los checkboxes de la clase 'valor-minero-checkbox'
+        var checkboxes = document.querySelectorAll('.valor-minero-checkbox');
+
+        // Esta función actualiza el estado de los checkboxes de la pregunta específica
+        function updateCheckboxState() {
+          var checkedCount = 0;
+          checkboxes.forEach(function(checkbox) {
+              if (checkbox.checked) checkedCount++;
+          });
+      
+          console.log('Número de checkboxes marcados:', checkedCount); // Esto mostrará el número en la consola
+      
+          if (checkedCount >= 3) {
+              checkboxes.forEach(function(checkbox) {
+                  if (!checkbox.checked) checkbox.disabled = true;
+              });
+          } else {
+              checkboxes.forEach(function(checkbox) {
+                  checkbox.disabled = false;
+              });
+          }
+      }
+      
+
+        // Agregar el evento 'change' a cada checkbox de la pregunta específica
+        checkboxes.forEach(function(checkbox) {
+          checkbox.addEventListener('change', updateCheckboxState);
+        });
+      });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var categoriaCheckboxes = document.querySelectorAll('.categoria-producto-checkbox');
+
+        function updateCategoriaCheckboxState() {
+          var checkedCount = 0;
+          categoriaCheckboxes.forEach(function(checkbox) {
+            if (checkbox.checked) checkedCount++;
+          });
+
+          if (checkedCount >= 3) {
+            categoriaCheckboxes.forEach(function(checkbox) {
+              if (!checkbox.checked) checkbox.disabled = true;
+            });
+          } else {
+            categoriaCheckboxes.forEach(function(checkbox) {
+              checkbox.disabled = false;
+            });
+          }
+        }
+
+        categoriaCheckboxes.forEach(function(checkbox) {
+          checkbox.addEventListener('change', updateCategoriaCheckboxState);
+        });
+      });
+
+    function validarSeleccion2() {
+      // Validación para la primera selección múltiple
+      var checkboxesValorMinero = document.querySelectorAll('.valor-minero-checkbox');
+      var seleccionadoValorMinero = false;
+      for (var i = 0; i < checkboxesValorMinero.length; i++) {
+        if (checkboxesValorMinero[i].checked) {
+          seleccionadoValorMinero = true;
+          break;
+        }
+      }
+    
+      // Validación para la segunda selección múltiple
+      var checkboxesCategoriaProducto = document.querySelectorAll('.categoria-producto-checkbox');
+      var seleccionadoCategoriaProducto = false;
+      for (var i = 0; i < checkboxesCategoriaProducto.length; i++) {
+        if (checkboxesCategoriaProducto[i].checked) {
+          seleccionadoCategoriaProducto = true;
+          break;
+        }
+      }
+    
+      // Mostramos un mensaje y retornamos falso si no hay ninguna casilla seleccionada en alguna de las selecciones
+      if (!seleccionadoValorMinero || !seleccionadoCategoriaProducto) {
+        alert('Por favor, seleccione al menos una opción en cada categoría.');
+        return false;
+      }
+    
+      // Validación para las preguntas de radio y campos de texto adicionales
+      if (!document.querySelector('input[name="sustainable_supply"]:checked') ||
+          !document.querySelector('input[name="efficiency_improvement"]:checked') ||
+          !document.querySelector('input[name="environmental_impact"]:checked') ||
+          !document.querySelector('input[name="priority_environmental"]:checked') ||
+          !document.querySelector('input[name="priority_social"]:checked') ||
+          !document.querySelector('input[name="compliance"]:checked') ||
+          !document.querySelector('input[name="mining_info"]:checked') ||
+          !document.querySelector('input[name="disposable"]:checked') ||
+          !document.querySelector('input[name="energy_consumption"]:checked')) {
+        alert('Por favor, responda todas las preguntas antes de enviar el formulario.');
+        return false;
+      }
+    
+      if (document.getElementById('impact-yes').checked && !document.getElementById('impact-details').value.trim() ||
+          document.getElementById('compliance-yes').checked && !document.getElementById('compliance-details').value.trim() ||
+          document.getElementById('mining-info-yes').checked && !document.getElementById('mining-info-details').value.trim() ||
+          document.getElementById('energy-consumption-yes').checked && !document.getElementById('energy-consumption-details').value.trim()) {
+        alert('Por favor, complete la información adicional requerida.');
+        return false;
+      }
+    
+      return true;
+    }
+    
+
+
+  </script>
+  
+    
+    
+    
+    
+
+    
+    
+    
+    
+
+  <!-- Bootstrap JS y sus dependencias (Popper y Tether) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body><br>
+<br>
+<br>
+</html>
+

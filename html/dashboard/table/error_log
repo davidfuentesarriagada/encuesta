@@ -1,0 +1,14 @@
+[25-Mar-2024 13:07:52 UTC] PHP Warning:  Undefined array key "procesos_cadena_valor" in /home/sicep/public_html/html/dashboard/table/guardarSegundaSeccion.php on line 46
+[25-Mar-2024 13:07:52 UTC] PHP Fatal error:  Uncaught TypeError: array_map(): Argument #2 ($array) must be of type array, null given in /home/sicep/public_html/html/dashboard/table/guardarSegundaSeccion.php:46
+Stack trace:
+#0 /home/sicep/public_html/html/dashboard/table/guardarSegundaSeccion.php(46): array_map(Object(Closure), NULL)
+#1 {main}
+  thrown in /home/sicep/public_html/html/dashboard/table/guardarSegundaSeccion.php on line 46
+[25-Mar-2024 20:46:56 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/sicep/public_html/html/dashboard/table/guardarPrimeraSeccion.php on line 11
+[25-Mar-2024 21:18:17 UTC] PHP Warning:  Undefined variable $company_name in /home/sicep/public_html/html/dashboard/table/guardarTerceraSeccion.php on line 126
+[25-Mar-2024 21:18:17 UTC] PHP Warning:  Undefined variable $company_rut in /home/sicep/public_html/html/dashboard/table/guardarTerceraSeccion.php on line 126
+[25-Mar-2024 21:19:09 UTC] PHP Warning:  Undefined variable $company_name in /home/sicep/public_html/html/dashboard/table/guardarTerceraSeccion.php on line 126
+[25-Mar-2024 21:19:09 UTC] PHP Warning:  Undefined variable $company_rut in /home/sicep/public_html/html/dashboard/table/guardarTerceraSeccion.php on line 126
+[26-Mar-2024 12:47:35 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/sicep/public_html/html/dashboard/table/guardarPrimeraSeccion.php on line 11
+[26-Mar-2024 12:50:01 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/sicep/public_html/html/dashboard/table/guardarSegundaSeccion.php on line 15
+[26-Mar-2024 14:29:30 UTC] PHP Warning:  mysqli::__construct(): (HY000/2002): Connection refused in /home/sicep/public_html/html/dashboard/table/guardarPrimeraSeccion.php on line 11

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vista de Datos</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<!-- DataTables -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- DataTables Responsive -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap5.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap5.min.js"></script>
+
+<style>
+  /* Aquí puedes agregar estilos personalizados */
+  .dataTable th, .dataTable td {
+    padding: 10px; /* Espaciado en celdas */
+    border-bottom: 1px solid #e3e6f0; /* Borde para separar filas */
+  }
+  .dataTable thead th {
+    background-color: #f8f9fc; /* Color de fondo para el encabezado */
+  }
+  .dataTable tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fc; /* Color de fondo para filas alternas */
+  }
+</style>
+<body>
+
+<div class="container mt-5">
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nombre de la empresa</th>
+                <th>RUT</th>
+                <th>Cadena Valor Minero</th>
+                <th>Categorías de Oferta</th>
+                <th>Abastecimiento Sostenible</th>
+                <th>Eficiencia de Consumo</th>
+                <th>Impactos Ambientales</th>
+                <th>Detalles de Impactos Ambientales</th>
+                <th>Prioridad Impactos Ambientales</th>
+                <th>Prioridad Impactos Sociales</th>
+                <th>Cumple Normativa</th>
+                <th>Detalles de Normativa</th>
+                <th>Informa Prioridades Mineras</th>
+                <th>Detalles de Prioridades Mineras</th>
+                <th>Alternativa Durable</th>
+                <th>Alternativa Eficiencia Energética</th>
+                <th>Detalles de Eficiencia Energética</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable({
+        "ajax": "getData.php",
+        "responsive": false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json" // Cambiar al idioma deseado
+        },
+        "columns": [
+        { "data": "company_name" },
+        { "data": "company_rut" },
+        { "data": "cadena_valor_minero" },
+        { "data": "categorias_oferta" },
+        { "data": "abastecimiento_sostenible" },
+        { "data": "eficiencia_consumo" },
+        { "data": "impactos_ambientales" },
+        { "data": "impactos_ambientales_detalles" },
+        { "data": "prioridad_impactos_ambientales" },
+        { "data": "prioridad_impactos_sociales" },
+        { "data": "cumple_normativa" },
+        { "data": "normativa_detalles" },
+        { "data": "informa_prioridades_mineras" },
+        { "data": "prioridades_mineras_detalles" },
+        { "data": "alternativa_durable" },
+        { "data": "alternativa_eficiencia_energetica" },
+        { "data": "alternativa_eficiencia_energetica_detalles" }
+        ]
+    });
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2532 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Registro</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://www.sicep.cl/favicon.ico">
+<link href="style.css" rel="stylesheet">
+<link href="index.js" rel="stylesheet">
+
+</head>
+
+<body style="background-color: #F2F3F4;">
+  <div class="img-cabecera mt-5 mb-5" style="text-align: center;">
+    <img src="https://www.pruebadyc.cl/AIA.png" style="width: 150px; height: auto;">
+    <img src="https://www.pruebadyc.cl/cochilco.png" style="width: 150px; height: auto;">
+    <img src="https://www.pruebadyc.cl/Marca-AIA.png" style="width: 150px; height: auto;">
+    
+  </div>
+
+  <!-- Contenedor del formulario -->
+  <h1 class="mb-5">Formulario de Evaluación - Cadena de Valor Minero</h1>
+  <form id="personal-form"  accept-charset="UTF-8"  onsubmit=" validarSeleccion3();" >
+    <div id="registration-form">
+      
+
+      <!-- Sección de la cuenta -->
+      <div id="personal-section" class="form-section active">
+        <h2 style="color: #0000CC;text-align: center;"><strong>Caracterización Género</strong> </h2><br>
+        <br>
+
+
+          <!-- Información de la Empresa -->
+          <div class="form-group">
+            <label for="company-name" class="form-label">Nombre de la empresa:</label>
+            <input type="text" class="form-control" id="company-name" name="company_name" placeholder="Nombre SpA-ltda-SA-EIRL" required>
+          </div>
+          <div class="form-group">
+            <label for="company-rut" class="form-label">Rut Empresa:</label>
+            <input type="text" class="form-control" id="company-rut" name="company_rut" placeholder="0000000-0" required>
+            <span id="rut-error-message" class="text-danger"></span> <!-- Elemento para mostrar el mensaje de error -->
+          </div>
+
+          <script>
+            document.getElementById("company-rut").addEventListener("blur", function() {
+              var rut = this.value;
+              // Verificación de formato extendido que incluye letra 'k' o 'K'
+              if (!/^\d{7,8}-[\dkK]$/.test(rut)) {
+                  document.getElementById("rut-error-message").textContent = "Formato de RUT inválido. Debe ser como 12345678-9 o 12345678-K.";
+                  document.getElementById("company-rut").value = ""; // Limpiar el campo
+                  return; // Detener la función si el formato no es correcto
+              }
+          
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "verificar_rut2.php", true);
+              xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+              xhr.onreadystatechange = function() {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                      if (xhr.responseText == "existe") {
+                          document.getElementById("rut-error-message").textContent = "El RUT ya respondió la encuesta, si desea modificar o eliminar su respuesta por favor contactese con Raúl Rodriguez, teléfono: 552 454312; Email: rrodriguez@sicep.cl";
+                          document.getElementById("company-rut").value = ""; // Limpiar el campo
+                      } else {
+                          document.getElementById("rut-error-message").textContent = ""; // Limpiar el mensaje de error
+                      }
+                  }
+              };
+              xhr.send("rut=" + encodeURIComponent(rut));
+          });
+
+
+          </script>
+
+          <div class="form-group">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>I. Dotación total [Mujeres y Hombres]</th>
+                  <th>Cantidad</th>
+                  <th>Observaciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Total personal propio</strong></td>
+                  <td><input type="number" class="form-control" name="total_personal_propio" readonly></td>
+                  <!--<td><input type="text" class="form-control" name="observaciones_personal_propio"  readonly></td>-->
+              </tr>
+              <tr>
+                  <td><strong>Total personal Contratista (empresas colaboradoras)</strong></td>
+                  <td><input type="number" class="form-control" name="total_personal_contratista" readonly></td>
+                  <!--<td><input type="text" class="form-control" name="observaciones_personal_contratista" readonly></td>-->
+              </tr>
+              <br>
+                <br>
+                <br>
+                <!-- Espaciado para la sección de Dotación Personal Propio -->
+                <tr>
+                  <td colspan="3"><strong>Dotación Personal Propio</strong></td>
+                </tr>
+                <tr>
+                  <td>Mujeres</td>
+                  <td><input type="number" class="form-control" id = "mujeres_personal_propio" name="mujeres_personal_propio" maxlength="3"></td>
+                  <td><input type="text" class="form-control" name="observaciones_mujeres_personal_propio"maxlength="3"></td>
+                </tr>
+                <tr>
+                  <td>Hombres</td>
+                  <td><input type="number" class="form-control"  id = "hombres_personal_propio" name="hombres_personal_propio"></td>
+                  <td><input type="text" class="form-control" name="observaciones_hombres_personal_propio"></td>
+                </tr>
+                <!-- Espaciado para la sección de Contratista -->
+                <tr>
+                  <td colspan="3"><strong>Contratista [empresas colaboradoras]</strong> </td>
+                </tr>
+                <tr>
+                  <td>Mujeres</td>
+                  <td><input type="number" class="form-control" id = "mujeres_contratista" name="mujeres_contratista"></td>
+                  <td><input type="text" class="form-control" name="observaciones_mujeres_contratista"></td>
+                </tr>
+                <tr>
+                  <td>Hombres</td>
+                  <td><input type="number" class="form-control" id = "hombres_contratista"  name="hombres_contratista"></td>
+                  <td><input type="text" class="form-control" name="observaciones_hombres_contratista"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div><br>
+          <br>
+          <br>
+
+
+          <div class="form-group" id="miFormulario1">
+            <fieldset>
+              <legend>II. Caracterización por tipo de proveedor [Producto y/o servicio que entrega] (Puede seleccionar hasta 3 opciones).</legend>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Arriendo de Equipos" id="arriendo-equipos">
+                <label class="form-check-label" for="arriendo-equipos">Arriendo de Equipos</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Importación y ventas" id="importacion-ventas">
+                <label class="form-check-label" for="importacion-ventas">Importación y ventas (equipos, partes y piezas)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Fabricante local" id="fabricante-local">
+                <label class="form-check-label" for="fabricante-local">Fabricante local (equipos, partes y piezas)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Servicios en Terreno" id="servicios-terreno">
+                <label class="form-check-label" for="servicios-terreno">Servicios en Terreno (ej: Mantención y reparación, servicios de apoyo a la operación)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Servicios Administrativos" id="servicios-administrativos">
+                <label class="form-check-label" for="servicios-administrativos">Servicios Administrativos (ej: contables, logísticos, seguridad, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Otros Servicios" id="otros-servicios">
+                <label class="form-check-label" for="otros-servicios">Otros Servicios (ej: consultorías, estudios, asesoría legal, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Softwares Transversales" id="softwares-transversales">
+                <label class="form-check-label" for="softwares-transversales">Softwares Transversales (ej: ERP, gestión de personas, gestión de proyectos, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Softwares para Procesos Mineros" id="softwares-procesos-mineros">
+                <label class="form-check-label" for="softwares-procesos-mineros">Softwares para Procesos Mineros (ej: planificación minera, exploración, gestión minera, entre otros)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Hardware Transversales" id="hardware-transversales">
+                <label class="form-check-label" for="hardware-transversales">Hardware Transversales (componentes tecnológicos para procesos transversales)</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="tipo_proveedor[]" value="Hardware para Procesos Mineros" id="hardware-procesos-mineros">
+                <label class="form-check-label" for="hardware-procesos-mineros">Hardware para Procesos Mineros (componentes tecnológicos mineros)</label>
+              </div>
+              <!-- Asegúrate de replicar esto para las restantes categorías si hay más -->
+            </fieldset>
+          </div>
+          
+          <br>
+          <br>
+          <br>
+
+          <div class="form-group" id="miFormulario2">
+            <fieldset>
+              <legend>III. Caracterización por procesos en la cadena de valor minero donde oferta su producto y/o servicio (Puede seleccionar hasta 3 opciones).</legend>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Exploración y Geociencias" id="exploracion-geociencias">
+                <label class="form-check-label" for="exploracion-geociencias">Exploración y Geociencias</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Planificación Minera" id="planificacion-minera">
+                <label class="form-check-label" for="planificacion-minera">Planificación Minera</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Mina Rajo" id="mina-rajo">
+                <label class="form-check-label" for="mina-rajo">Mina Rajo</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Mina Subterránea" id="mina-subterranea">
+                <label class="form-check-label" for="mina-subterranea">Mina Subterránea</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Proceso Hidrometalúrgico" id="proceso-hidrometalurgico">
+                <label class="form-check-label" for="proceso-hidrometalurgico">Proceso Hidrometalúrgico</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Proceso de concentración de minerales" id="proceso-concentracion-minerales">
+                <label class="form-check-label" for="proceso-concentracion-minerales">Proceso de concentración de minerales</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Fundición" id="fundicion">
+                <label class="form-check-label" for="fundicion">Fundición</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Refinería Electrolítica" id="refineria-electrolitica">
+                <label class="form-check-label" for="refineria-electrolitica">Refinería Electrolítica</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Relaves" id="relaves">
+                <label class="form-check-label" for="relaves">Relaves</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Comercialización" id="comercializacion">
+                <label class="form-check-label" for="comercializacion">Comercialización</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Nuevos usos del cobre" id="nuevos-usos-cobre">
+                <label class="form-check-label" for="nuevos-usos-cobre">Nuevos usos del cobre</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="Transversal" id="transversal">
+                <label class="form-check-label" for="transversal">Transversal [proveedor que opera en toda la cadena de valor minera]</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="procesos_cadena_valor[]" value="mineria_no_metalica" id="mineria_no_metalica">
+                <label class="form-check-label" for="mineria_no_metalica">Minería NO metálica</label>
+              </div>
+            </fieldset>
+          </div>
+
+          
+
+          <!--tablas-->
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>IV. Caracterización por Edad [N°]</th>
+                  <th>Mujeres</th>
+                  <th></th>
+                  <th>Hombres</th>
+                  <th></th>
+                  <th>Observaciones</th>
+                </tr>
+                <tr>
+                  <th>Edad</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>18-30</td>
+                  <td><input type="number" class="form-control"  name="mujeres_18_30_propios" min="0" oninput="validarLongitud(this)" /></td>
+                  <td><input type="number" class="form-control" name="mujeres_18_30_contratistas"min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_18_30_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_18_30_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_18_30"></td>
+                </tr>
+                <tr>
+                  <td>31-40</td>
+
+                  <td><input type="number" class="form-control" name="mujeres_31_40_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="mujeres_31_40_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_31_40_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_31_40_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_31_40"></td>
+                  <!-- Repetir el patrón de campos de entrada como en la fila anterior -->
+                </tr>
+                <tr>
+                  <td>41-50</td>
+
+                  <td><input type="number" class="form-control" name="mujeres_41_50_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="mujeres_41_50_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_41_50_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_41_50_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_41_50"></td>
+                  <!-- Repetir el patrón de campos de entrada como en la fila anterior -->
+                </tr>
+                <tr>
+                  <td>51-60</td>
+
+                  <td><input type="number" class="form-control" name="mujeres_51_60_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="mujeres_51_60_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_51_60_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_51_60_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_51_60"></td>
+                  <!-- Repetir el patrón de campos de entrada como en la fila anterior -->
+                </tr>
+                <tr>
+                  <td>mayor o igual a 61</td>
+                  <td><input type="number" class="form-control" name="mujeres_61_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="mujeres_61_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_61_propios" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="hombres_61_contratistas" min="0" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_61"></td>
+                </tr>
+                
+                <tr>
+                  <th>total</th>
+                  <td><input type="number" class="form-control" name="total_mujeres_propios"  readonly></td>
+                  <td><input type="number" class="form-control" name="total_mujeres_contratistas" readonly></td>
+                  <td><input type="number" class="form-control" name="total_hombres_propios" readonly></td>
+                  <td><input type="number" class="form-control" name="total_hombres_contratistas" readonly></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div><br>
+          <br>
+          <br>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            // Obtener todos los elementos de entrada de 'Mujeres Propios' por grupo de edad
+            var inputsMujeresPropias = document.querySelectorAll('input[name^="mujeres_"][name$="_propios"]');
+
+            // Función para sumar los valores y comparar con el total
+            function validarTotalMujeresPropias() {
+              var suma = 0;
+              var count = 0;
+
+              var totalMujeresPropias = document.querySelector('input[id="mujeres_personal_propio"]').value || 0;
+
+              inputsMujeresPropias.forEach(function(input) {
+                if (input.value !== "")
+                    count++;
+                var valor = Number(input.value) || 0;
+                suma += valor;
+              });
+
+              var totalMujeresPropiasTabla = document.querySelector('input[name="total_mujeres_propios"]');
+
+
+              if (count !== inputsMujeresPropias.length && suma <= Number(totalMujeresPropias)){
+                totalMujeresPropiasTabla.style.backgroundColor = ''; 
+                return false;
+              }
+              else{
+                totalMujeresPropiasTabla.style.backgroundColor = 'red';
+              }
+                  
+
+              
+              
+              // Actualizar el total en la tabla de caracterización por edad
+              
+              totalMujeresPropiasTabla.value = suma;
+              console.log(totalMujeresPropiasTabla)
+              // Comprobar si la suma excede el total y actuar en consecuencia
+              if (suma !== Number(totalMujeresPropias)) {
+                totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                alert('El valor total de mujeres propias no coincide con la suma desglosada por edad.');
+              } else {
+                totalMujeresPropiasTabla.style.backgroundColor = ''; 
+                
+              }
+
+            }
+
+            // Agregar el event listener a cada input
+            inputsMujeresPropias.forEach(function(input) {
+              input.addEventListener('input', validarTotalMujeresPropias);
+            });
+          });
+
+
+
+          // Obtener todos los elementos de entrada de 'Mujeres Contratistas' por grupo de edad
+          var inputsMujeresContratistas = document.querySelectorAll('input[name^="mujeres_"][name$="_contratistas"]');
+
+          // Función para sumar los valores y comparar con el total
+          function validarTotalMujeresContratistas() {
+            var suma = 0;
+            var count = 0;
+
+
+            var totalMujeresContratistas = document.querySelector('input[name="mujeres_contratista"]').value || 0;
+
+            inputsMujeresContratistas.forEach(function(input) {
+              if (input.value !== "")
+                    count++;
+              var valor = Number(input.value) || 0;
+              suma += valor;
+            });
+
+            var totalMujeresContratistasTabla = document.querySelector('input[name="total_mujeres_contratistas"]');
+
+
+            if (count !== inputsMujeresContratistas.length && suma <= Number(totalMujeresContratistas)){
+              totalMujeresContratistasTabla.style.backgroundColor = '';
+              return false;
+            }
+            else{
+              totalMujeresContratistasTabla.style.backgroundColor = 'red';
+            }
+                  
+
+           
+            
+            // Actualizar el total en la tabla de caracterización por edad
+            
+            totalMujeresContratistasTabla.value = suma;
+
+            // Comprobar si la suma excede el total y actuar en consecuencia
+            if (suma !== Number(totalMujeresContratistas)) {
+              totalMujeresContratistasTabla.style.backgroundColor = 'red';
+              alert('El valor total de mujeres contratistas no coincide con la suma desglosada por edad.');
+            } else {
+              totalMujeresContratistasTabla.style.backgroundColor = '';
+            }
+          }
+
+          // Agregar el event listener a cada input
+          inputsMujeresContratistas.forEach(function(input) {
+            input.addEventListener('input', validarTotalMujeresContratistas);
+          });
+
+
+
+          // Para hombres propios
+          document.addEventListener('DOMContentLoaded', function() {
+            var inputsHombresPropios = document.querySelectorAll('input[name^="hombres_"][name$="_propios"]');
+
+            function validarTotalHombresPropios() {
+              var suma = 0;
+              var count = 0;
+
+              var totalHombresPropios = document.querySelector('input[name="hombres_personal_propio"]').value || 0;
+
+              inputsHombresPropios.forEach(function(input) {
+                if (input.value !== "")
+                    count++;
+                suma += Number(input.value) || 0;
+              });
+
+              var totalHombresPropiosTabla = document.querySelector('input[name="total_hombres_propios"]');
+
+
+              if (count !== inputsHombresPropios.length && suma <= Number(totalHombresPropios)){
+                totalHombresPropiosTabla.style.backgroundColor = '';
+                return false;
+
+              }
+              else{
+                totalHombresPropiosTabla.style.backgroundColor = 'red';
+              }
+                
+
+              totalHombresPropiosTabla.value = suma;
+
+              if (suma !== Number(totalHombresPropios)) {
+                totalHombresPropiosTabla.style.backgroundColor = 'red';
+                alert('El valor total de hombres propios no coincide con la suma desglosada por edad.');
+              } else {
+                totalHombresPropiosTabla.style.backgroundColor = '';
+              }
+            }
+
+            inputsHombresPropios.forEach(function(input) {
+              input.addEventListener('input', validarTotalHombresPropios);
+            });
+          });
+
+          // Para hombres contratistas
+          document.addEventListener('DOMContentLoaded', function() {
+            var inputsHombresContratistas = document.querySelectorAll('input[name^="hombres_"][name$="_contratistas"]');
+
+            function validarTotalHombresContratistas() {
+              var suma = 0;
+              var count = 0;
+
+
+              var totalHombresContratistas = document.querySelector('input[name="hombres_contratista"]').value || 0;
+
+              inputsHombresContratistas.forEach(function(input) {
+                if (input.value !== "")
+                    count++;
+                suma += Number(input.value) || 0;
+              });
+
+              var totalHombresContratistasTabla = document.querySelector('input[name="total_hombres_contratistas"]');
+
+              if (count !== inputsHombresContratistas.length && suma <= Number(totalHombresContratistas)){
+                totalHombresContratistasTabla.style.backgroundColor = ''
+                return false;
+              }
+              else{
+                totalHombresContratistasTabla.style.backgroundColor = 'red';
+              }
+                  
+
+              
+              
+              totalHombresContratistasTabla.value = suma;
+
+              if (suma !== Number(totalHombresContratistas)) {
+                totalHombresContratistasTabla.style.backgroundColor = 'red';
+                alert('El valor total de hombres contratistas no coincide con la suma desglosada por edad.');
+              } else {
+                totalHombresContratistasTabla.style.backgroundColor = '';
+              }
+            }
+
+            inputsHombresContratistas.forEach(function(input) {
+              input.addEventListener('input', validarTotalHombresContratistas);
+            });
+          });
+
+
+
+          </script>
+          
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>V. Antigüedad en la empresa [N°]</th>
+                  <th>Mujeres</th>
+                  <th></th>
+                  <th>Hombres</th>
+                  <th></th>
+                  <th>Observaciones</th>
+                </tr>
+                <tr>
+                  <th>Antigüedad</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Cada fila corresponde a un rango de antigüedad -->
+                <tr>
+                  <td>menos 1 año</td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_1_mujeres_propias" name="antiguedad_mujeres_propias" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_1_mujeres_contratistas" name="antiguedad_mujeres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_1_hombres_propios" name="antiguedad_hombres_propios" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_1_hombres_contratistas" name="antiguedad_hombres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control antiguedad-input" name="observaciones_menos_1" ></td>
+                </tr>
+                <tr>
+                  <td>1-5 años</td>
+                  <td><input type="number" class="form-control antiguedad-input" id="antiguedad_menos_1_5_mujeres_propias" name="antiguedad_mujeres_propias" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_1_5_mujeres_contratistas" name="antiguedad_mujeres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_1_5_hombres_propios" name="antiguedad_hombres_propios" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_1_5_hombres_contratistas" name="antiguedad_hombres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control antiguedad-input" name="observaciones_menos_1_5" ></td>
+                </tr>
+                <tr>
+                  <td>6-10 años</td>
+                  <td><input type="number" class="form-control antiguedad-input" id="antiguedad_menos_6_10_mujeres_propias" name="antiguedad_mujeres_propias" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_6_10_mujeres_contratistas" name="antiguedad_mujeres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_6_10_hombres_propios" name="antiguedad_hombres_propios" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_6_10_hombres_contratistas" name="antiguedad_hombres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control antiguedad-input" name="observaciones_menos_6_10" ></td>
+                </tr>
+                <tr>
+                  <td>11-20 años</td>
+                  <td><input type="number" class="form-control antiguedad-input" id="antiguedad_menos_11_20_mujeres_propias" name="antiguedad_mujeres_propias" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_11_20_mujeres_contratistas" name="antiguedad_mujeres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_11_20_hombres_propios" name="antiguedad_hombres_propios" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input" id = "antiguedad_menos_11_20_hombres_contratistas" name="antiguedad_hombres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control antiguedad-input" name="observaciones_menos_11_20" ></td>
+                </tr>
+                <tr>
+                  <td>mayor o igual a 21 años</td>
+                  <td><input type="number" class="form-control antiguedad-input" id="antiguedad_menos_21_mujeres_propias" name="antiguedad_mujeres_propias" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_21_mujeres_contratistas" name="antiguedad_mujeres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control antiguedad-input"  id = "antiguedad_menos_21_hombres_propios" name="antiguedad_hombres_propios" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-controlantiguedad-input" id = "antiguedad_menos_21_hombres_contratistas" name="antiguedad_hombres_contratistas" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control antiguedad-input" name="observaciones_menos_21" ></td>
+                </tr>
+               
+                <!-- Fila del total -->
+                <tr>
+                  <th>total</th>
+                  <td><input type="number" class="form-control antiguedad-input" name="total_antiguedad_mujeres_propias" readonly></td>
+                  <td><input type="number" class="form-control antiguedad-input" name="total_antiguedad_mujeres_contratistas" readonly></td>
+                  <td><input type="number" class="form-control antiguedad-input" name="total_antiguedad_hombres_propios" readonly></td>
+                  <td><input type="number" class="form-control antiguedad-input" name="total_antiguedad_hombres_contratistas" readonly></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+          <br>
+          <br>
+          <br>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Para mujeres propias
+              var inputsMujeresPropiasAntiguedad = document.querySelectorAll('input[name ="antiguedad_mujeres_propias"]');
+            
+              function validarTotalMujeresPropiasAntiguedad() {
+                var suma = 0;
+                var count = 0;
+
+                var totalMujeresPropias = document.querySelector('input[id="mujeres_personal_propio"]').value || 0;
+
+
+                inputsMujeresPropiasAntiguedad.forEach(function(input) {
+                  if (input.value !== "")
+                    count++;
+                  suma += Number(input.value) || 0;
+
+                });
+
+                var totalMujeresPropiasTabla = document.querySelector('input[name="total_antiguedad_mujeres_propias"]');
+
+                if (count !== inputsMujeresPropiasAntiguedad.length && suma <= Number(totalMujeresPropias)){
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                }
+                  
+
+
+                
+                
+                totalMujeresPropiasTabla.value = suma;
+            
+                if (suma !== Number(totalMujeresPropias)) {
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de mujeres propias no coincide con la suma desglosada por antigüedad.');
+                } else {
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                }
+              }
+            
+              inputsMujeresPropiasAntiguedad.forEach(function(input) {
+                input.addEventListener('input', validarTotalMujeresPropiasAntiguedad);
+              });
+            
+              // Para mujeres contratistas
+              var inputsMujeresContratistasAntiguedad = document.querySelectorAll('input[name="antiguedad_mujeres_contratistas"]');
+            
+              function validarTotalMujeresContratistasAntiguedad() {
+                var suma = 0;
+                var count = 0;
+
+                var totalMujeresContratistas = document.querySelector('input[id="mujeres_contratista"]').value || 0;
+
+                inputsMujeresContratistasAntiguedad.forEach(function(input) {
+                  if (input.value !== "")
+                  count++;
+                  
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalMujeresContratistasTabla = document.querySelector('input[name="total_antiguedad_mujeres_contratistas"]');
+
+                if (count !== inputsMujeresContratistasAntiguedad.length && suma <= Number(totalMujeresContratistas)){
+                  totalMujeresContratistasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                }
+               
+
+            
+               
+                
+                totalMujeresContratistasTabla.value = suma;
+            
+                if (suma !== Number(totalMujeresContratistas)) {
+                  totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de mujeres contratistas no coincide con la suma desglosada por antigüedad.');
+                } else {
+                  totalMujeresContratistasTabla.style.backgroundColor = '';
+                }
+              }
+            
+              inputsMujeresContratistasAntiguedad.forEach(function(input) {
+                input.addEventListener('input', validarTotalMujeresContratistasAntiguedad);
+              });
+            
+              // Para hombres propios
+              var inputsHombresPropiosAntiguedad = document.querySelectorAll('input[name="antiguedad_hombres_propios"]');
+            
+              function validarTotalHombresPropiosAntiguedad() {
+                var suma = 0;
+                var count = 0;
+
+
+                var totalHombresPropios = document.querySelector('input[id="hombres_personal_propio"]').value || 0;
+
+                inputsHombresPropiosAntiguedad.forEach(function(input) {
+                  if (input.value !== "")
+                    count++;
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalHombresPropiosTabla = document.querySelector('input[name="total_antiguedad_hombres_propios"]');
+
+                if (count !== inputsHombresPropiosAntiguedad.length && suma <= Number(totalHombresPropios)){
+                  totalHombresPropiosTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalHombresPropiosTabla.style.backgroundColor = 'red';
+                }
+                  
+            
+                
+                
+                totalHombresPropiosTabla.value = suma;
+
+              
+            
+                if (suma !== Number(totalHombresPropios)) {
+                  totalHombresPropiosTabla.style.backgroundColor = 'red';
+                  alert('El valor total de hombres propios no coincide con la suma desglosada por antigüedad.');
+                } else {
+                  totalHombresPropiosTabla.style.backgroundColor = '';
+                }
+              }
+            
+              inputsHombresPropiosAntiguedad.forEach(function(input) {
+                input.addEventListener('input', validarTotalHombresPropiosAntiguedad);
+              });
+            
+              // Para hombres contratistas
+              var inputsHombresContratistasAntiguedad = document.querySelectorAll('input[name="antiguedad_hombres_contratistas"]');
+            
+              function validarTotalHombresContratistasAntiguedad() {
+                var suma = 0;
+                var count = 0;
+
+                var totalHombresContratistas = document.querySelector('input[id="hombres_contratista"]').value || 0;
+
+                inputsHombresContratistasAntiguedad.forEach(function(input) {
+                  if (input.value !== "")
+                    count++;
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalHombresContratistasTabla = document.querySelector('input[name="total_antiguedad_hombres_contratistas"]');
+
+                if (count !== inputsHombresContratistasAntiguedad.length && suma <= Number(totalHombresContratistas)){
+                  totalHombresContratistasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalHombresContratistasTabla.style.backgroundColor = 'red';
+                }
+                  
+
+                
+                totalHombresContratistasTabla.value = suma;
+            
+                if (suma !== Number(totalHombresContratistas)) {
+                  totalHombresContratistasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de hombres contratistas no coincide con la suma desglosada por antigüedad.');
+                } else {
+                  totalHombresContratistasTabla.style.backgroundColor = '';
+                }
+              }
+            
+              inputsHombresContratistasAntiguedad.forEach(function(input) {
+                input.addEventListener('input', validarTotalHombresContratistasAntiguedad);
+              });
+
+              
+            
+          });
+            
+          </script>
+
+          <div class="table-responsive">
+            <table class="table" id="tabla_tipo_cargo">
+                <thead>
+                    <tr>
+                        <th>VI.Participación por tipo de cargo [N°]</th>
+                        <th colspan="2">Mujeres</th>
+                        <th colspan="2">Hombres</th>
+                        <th>Observaciones</th>
+                    </tr>
+                    <tr>
+                        <th>Cargo</th>
+                        <th>Propios</th>
+                        <th>Contratistas</th>
+                        <th>Propios</th>
+                        <th>Contratistas</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Repetir este patrón para cada tipo de cargo -->
+                    <tr>
+                        <td>Directoras [es] / Gerentes</td>
+                        <td><input type="number" class="form-control"  id = "directores_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id = "directores_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id="directores_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id="directores_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                        <td><input type="text" class="form-control" name="observaciones_directores" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Subgerentes/Superintendentes</td>
+                      <td><input type="number" class="form-control" id = "Subgerentes_Superintendentes_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Subgerentes_Superintendentes_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Subgerentes_Superintendentes_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Subgerentes_Superintendentes_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Subgerentes_Superintendentes"></td>
+                    </tr>
+
+                    <tr>
+                      <td>Jefas (es) de áreas</td>
+                      <td><input type="number" class="form-control" id = "Jefas_areas_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Jefas_areas_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Jefas_areas_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Jefas_areas_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Jefas_areas" ></td>
+                    </tr>
+                    <tr>
+                      <td>Supervisoras [es]</td>
+                      <td><input type="number" class="form-control" id = "Supervisoras_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Supervisoras_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Supervisoras_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Supervisoras_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Supervisoras" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Profesionales</td>
+                      <td><input type="number" class="form-control" id = "Profesionales_propios_mujeres"  name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Profesionales_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Profesionales_propios_hombres" name="directores_propios_hombre"oninput="validarLongitud(this)" ></td>
+                      <td><input type="number" class="form-control" id="Profesionales_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Profesionales" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Analistas</td>
+                      <td><input type="number" class="form-control" id="Analistas_propios_mujeres" name="total_propios_mujeres"  oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Analistas_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Analistas_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Analistas_contratistas_hombres" name="directores_contratistas_hombres"oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Analistas" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Operadoras [es]</td>
+                      <td><input type="number" class="form-control" id="Operadoras_propios_mujeres" name="total_propios_mujeres"  oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Operadoras_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Operadoras_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Operadoras_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Operadoras" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Mantenedoras [es]</td>
+                      <td><input type="number" class="form-control" id="Mantenedoras_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Mantenedoras_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Mantenedoras_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Mantenedoras_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Mantenedoras" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Personal Administrativo</td>
+                      <td><input type="number" class="form-control" id="Administrativo_propios_mujeres" name="total_propios_mujeres" oninput="validarLongitud(this)" ></td>
+                      <td><input type="number" class="form-control" id="Administrativo_contratistas_mujeres" name="directores_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Administrativo_propios_hombres" name="directores_propios_hombre" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Administrativo_contratistas_hombres" name="directores_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Administrativo" ></td>
+                    </tr>
+                    <!-- Continuar para los demás tipos de cargo... -->
+                    <tr>
+                      <th>Total</th>
+                      <td><input type="number" class="form-control" id="total_cargo_mujeres_propias" name="total_cargo_mujeres_propias" readonly></td>
+                      <td><input type="number" class="form-control" id="total_cargo_mujeres_contratistas" name="total_cargo_mujeres_contratistas" readonly></td>
+                      <td><input type="number" class="form-control" id="total_cargo_hombres_propios" name="total_cargo_hombres_propios" readonly></td>
+                      <td><input type="number" class="form-control" id="total_cargo_hombres_contratistas" name="total_cargo_hombres_contratistas" readonly></td>
+                      <td></td>
+                  </tr>
+                    
+                </tbody>
+            </table>
+            
+          </div>
+          <br>
+          <br>
+          <br>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Obtener todos los elementos de entrada de 'Mujeres Propias' por tipo de cargo
+              var inputsMujeresPropias = document.querySelectorAll('input[name="total_propios_mujeres"]');
+
+              
+              // Función para sumar los valores y comparar con el total
+              function validarTotalMujeresPropias() {
+                var suma = 0;
+                var count = 0;
+
+                var totalMujeresPropias = document.querySelector('input[id="mujeres_personal_propio"]').value || 0;
+                
+                inputsMujeresPropias.forEach(function(input) {
+                  if (input.value !== "")
+                      count++;
+                  var valor = Number(input.value) || 0;
+                  suma += valor;
+                });
+
+
+                var totalMujeresPropiasTabla = document.querySelector('input[id="total_cargo_mujeres_propias"]');
+
+              
+            
+                if (count !== inputsMujeresPropias.length && suma <= Number(totalMujeresPropias)){
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                }
+                    
+            
+                
+                
+                totalMujeresPropiasTabla.value = suma;
+            
+                // Comprobar si la suma excede el total y actuar en consecuencia
+                if (suma !== Number(totalMujeresPropias)) {
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de mujeres propias no coincide con la suma desglosada por tipo de cargo.');
+                } else {
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                }
+              }
+            
+              // Agregar el event listener a cada input
+              inputsMujeresPropias.forEach(function(input) {
+                input.addEventListener('input', validarTotalMujeresPropias);
+              });
+            
+              // Para mujeres CONTRATISTAS
+              var inputsMujeresContratistasCargo = document.querySelectorAll('input[name="directores_contratistas_mujeres"]');
+
+              function validarTotalMujeresContratistasCargo() {
+                var suma = 0;
+                var count = 0;
+
+                var totalMujeresContratistas = document.querySelector('input[id="mujeres_contratista"]').value || 0;
+
+                inputsMujeresContratistasCargo.forEach(function(input) {
+                  if (input.value !== "") {
+                    count++;
+                  }
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalMujeresContratistasTabla = document.querySelector('input[id="total_cargo_mujeres_contratistas"]');
+
+                if (count !== inputsMujeresContratistasCargo.length && suma <= Number(totalMujeresContratistas)) {
+                  totalMujeresContratistasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                }
+
+                
+                totalMujeresContratistasTabla.value = suma;
+
+                if (suma !== Number(totalMujeresContratistas)) {
+                  totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de mujeres contratistas no coincide con la suma desglosada por cargo.');
+                } else {
+                  totalMujeresContratistasTabla.style.backgroundColor = '';
+                }
+              }
+
+              inputsMujeresContratistasCargo.forEach(function(input) {
+                input.addEventListener('input', validarTotalMujeresContratistasCargo);
+              });
+
+              // Para hombres propios 
+              var inputsHombresPropios = document.querySelectorAll('input[name="directores_propios_hombre"]');
+
+              function validarTotalHombresPropiosCargo() {
+                var suma = 0;
+                var count = 0;
+
+                var totalHombresPropios = document.querySelector('input[id="hombres_personal_propio"]').value || 0;
+
+                inputsHombresPropios.forEach(function(input) {
+                  if (input.value !== "") {
+                    count++;
+                  }
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalHombresPropiosTabla = document.querySelector('input[id="total_cargo_hombres_propios"]');
+
+                if (count !== inputsHombresPropios.length && suma <= Number(totalHombresPropios)) {
+                  totalHombresPropiosTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalHombresPropiosTabla.style.backgroundColor = 'red';
+                }
+
+                
+                totalHombresPropiosTabla.value = suma;
+
+                if (suma !== Number(totalHombresPropios)) {
+                  totalHombresPropiosTabla.style.backgroundColor = 'red';
+                  alert('El valor total de hombres propios no coincide con la suma desglosada por Cargo.');
+                } else {
+                  totalHombresPropiosTabla.style.backgroundColor = '';
+                }
+
+              }
+
+              inputsHombresPropios.forEach(function(input) {
+                input.addEventListener('input', validarTotalHombresPropiosCargo);
+              });
+
+              // Para hombres CONTRATISTAS
+              var inputsHombresContratistasCargo = document.querySelectorAll('input[name="directores_contratistas_hombres"]');
+
+              function validarTotalHombresContratistasProfesion() {
+                  var suma = 0;
+                  var count = 0;
+
+                  var totalHombresContratistas = document.querySelector('input[id="hombres_contratista"]').value || 0;
+
+                  inputsHombresContratistasCargo.forEach(function(input) {
+                      if (input.value !== "") {
+                          count++;
+                      }
+                      suma += Number(input.value) || 0;
+                  });
+
+                  var totalHombresContratistasTabla = document.querySelector('input[id="total_cargo_hombres_contratistas"]');
+
+                  if (count !== inputsHombresContratistasCargo.length && suma <= Number(totalHombresContratistas)) {
+                    totalHombresContratistasTabla.style.backgroundColor = '';
+                      return false;
+                  }
+                  else{
+                    totalHombresContratistasTabla.style.backgroundColor = 'red';
+                  }
+
+                  
+                  totalHombresContratistasTabla.value = suma;
+
+                  if (suma !== Number(totalHombresContratistas)) {
+                      totalHombresContratistasTabla.style.backgroundColor = 'red';
+                      alert('El valor total de hombres contratistas no coincide con la suma desglosada por profesión.');
+                  } else {
+                      totalHombresContratistasTabla.style.backgroundColor = '';
+                  }
+              }
+
+              inputsHombresContratistasCargo.forEach(function(input) {
+                  input.addEventListener('input', validarTotalHombresContratistasProfesion);
+              });
+
+
+
+            });
+            
+          </script>
+
+          <div class="table-responsive">
+            <table class="table" id="tabla_profesion_oficio">
+              <thead>
+                <tr>
+                  <th>VII.Participación por tipo de profesión u oficio [N°]</th>
+                  <th colspan="2">Mujeres</th>
+                  <th colspan="2">Hombres</th>
+                  <th>Observaciones</th>
+                </tr>
+                <tr>
+                  <th>Cargo</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th>Propios</th>
+                  <th>Contratistas</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ingeniería en Minas (y similares)</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="Ing_minas_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="Ing_minas_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="Ing_minas_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="Ing_minas_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_minas" id="observaciones_minas_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Ingeniería en Metalurgia/Química (Ing. de procesos)</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="Ing_metalurgia_quimica_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="Ing_metalurgia_quimica_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="Ing_metalurgia_quimica_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="Ing_metalurgia_quimica_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_metalurgia_quimica" id="observaciones_metalurgia_quimica_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Ingeniería Eléctrica, Mecánica o similares de Mantención</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="Ing_electrica_mecanica_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="Ing_electrica_mecanica_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="Ing_electrica_mecanica_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="Ing_electrica_mecanica_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control " name="observaciones_electrica_mecanica" id="observaciones_electrica_mecanica_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Ingeniería Industrial/Comercial (o similares)</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="Ing_industrial_comercial_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="Ing_industrial_comercial_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="Ing_industrial_comercial_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="Ing_industrial_comercial_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_industrial_comercial" id="observaciones_industrial_comercial_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Otras Ingenierías</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="otras_ingenierias_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="otras_ingenierias_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="otras_ingenierias_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="otras_ingenierias_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_otras_ingenierias" id="observaciones_otras_ingenierias_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Carreras Técnicas</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="carreras_tecnicas_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="carreras_tecnicas_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="carreras_tecnicas_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="carreras_tecnicas_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_carreras_tecnicas" id="observaciones_carreras_tecnicas_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Otras Carreras</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="otras_carreras_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="otras_carreras_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="otras_carreras_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="otras_carreras_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_otras_carreras" id="observaciones_otras_carreras_profesion" ></td>
+                </tr>
+                <tr>
+                  <td>Sin Profesión</td>
+                  <td><input type="number" class="form-control" name="minas_propios_mujeres" id="sin_profesion_propios_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_mujeres" id="sin_profesion_contratistas_mujeres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_propios_hombres" id="sin_profesion_propios_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="number" class="form-control" name="minas_contratistas_hombres" id="sin_profesion_contratistas_hombres_profesion" oninput="validarLongitud(this)"></td>
+                  <td><input type="text" class="form-control" name="observaciones_sin_profesion" id="observaciones_sin_profesion_profesion" oninput="validarLongitud(this)"></td>
+                </tr>
+                <tr>
+                  <th>Total</th>
+                  <td><input type="number" class="form-control" name="total_propios_mujeres_profesion" id="total_propios_mujeres_profesion" readonly></td>
+                  <td><input type="number" class="form-control" name="total_contratistas_mujeres_profesion" id="total_contratistas_mujeres_profesion" readonly></td>
+                  <td><input type="number" class="form-control" name="total_propios_hombres_profesion" id="total_propios_hombres_profesion" readonly></td>
+                  <td><input type="number" class="form-control" name="total_contratistas_hombres_profesion" id="total_contratistas_hombres_profesion" readonly></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div><br>
+          <br>
+          <br>
+
+
+          <script>
+            // Para mujeres propias en Ingeniería en Minas
+            var inputsMujeresPropiasProfesion = document.querySelectorAll('input[name="minas_propios_mujeres"]');
+          
+            function validarTotalMujeresPropiasProfesion() {
+              var suma = 0;
+              var count = 0;
+
+              var totalMujeresPropias = document.querySelector('input[id="mujeres_personal_propio"]').value || 0;
+          
+              inputsMujeresPropiasProfesion.forEach(function(input) {
+                if (input.value !== "") {
+                  count++;
+                }
+                suma += Number(input.value) || 0;
+              });
+
+              var totalMujeresPropiasTabla = document.querySelector('input[id="total_propios_mujeres_profesion"]');
+          
+              if (count !== inputsMujeresPropiasProfesion.length && suma <= Number(totalMujeresPropias)) {
+                totalMujeresPropiasTabla.style.backgroundColor = '';
+                return false;
+              }
+              else{
+                totalMujeresPropiasTabla.style.backgroundColor = 'red';
+              }
+          
+              
+              
+              totalMujeresPropiasTabla.value = suma;
+          
+              if (suma !== Number(totalMujeresPropias)) {
+                totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                alert('El valor total de mujeres propias no coincide con la suma desglosada por profesión.');
+              } else {
+                totalMujeresPropiasTabla.style.backgroundColor = '';
+              }
+            }
+          
+            inputsMujeresPropiasProfesion.forEach(function(input) {
+              input.addEventListener('input', validarTotalMujeresPropiasProfesion);
+            });
+
+           // Para mujeres CONTRATISTAS
+            var inputsMujeresContratistasProfesion = document.querySelectorAll('input[name="minas_contratistas_mujeres"]');
+
+            function validarTotalMujeresContratistasProfesion() {
+              var suma = 0;
+              var count = 0;
+
+              var totalMujeresContratistas = document.querySelector('input[id="mujeres_contratista"]').value || 0;
+
+              inputsMujeresContratistasProfesion.forEach(function(input) {
+                if (input.value !== "") {
+                  count++;
+                }
+                suma += Number(input.value) || 0;
+              });
+
+              var totalMujeresContratistasTabla = document.querySelector('input[id="total_contratistas_mujeres_profesion"]');
+
+              if (count !== inputsMujeresContratistasProfesion.length && suma <= Number(totalMujeresContratistas)) {
+                 totalMujeresContratistasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                }
+
+              
+              totalMujeresContratistasTabla.value = suma;
+
+              if (suma !== Number(totalMujeresContratistas)) {
+                totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                alert('El valor total de mujeres contratistas no coincide con la suma desglosada por profesión.');
+              } else {
+                totalMujeresContratistasTabla.style.backgroundColor = '';
+              }
+            }
+
+            inputsMujeresContratistasProfesion.forEach(function(input) {
+              input.addEventListener('input', validarTotalMujeresContratistasProfesion);
+            });
+
+            // Para hombres propios 
+            var inputsHombresPropiosProfesion = document.querySelectorAll('input[name="minas_propios_hombres"]');
+
+            function validarTotalHombresPropiosProfesion() {
+              var suma = 0;
+              var count = 0;
+
+              var totalHombresPropios = document.querySelector('input[id="hombres_personal_propio"]').value || 0;
+
+              inputsHombresPropiosProfesion.forEach(function(input) {
+                if (input.value !== "") {
+                  count++;
+                }
+                suma += Number(input.value) || 0;
+              });
+
+              var totalHombresPropiosTabla = document.querySelector('input[id="total_propios_hombres_profesion"]');
+
+              if (count !== inputsHombresPropiosProfesion.length && suma <= Number(totalHombresPropios)) {
+                totalHombresPropiosTabla.style.backgroundColor = '';
+                return false;
+              }
+              else{
+                totalHombresPropiosTabla.style.backgroundColor = 'red';
+              }
+
+              
+              totalHombresPropiosTabla.value = suma;
+
+              if (suma !== Number(totalHombresPropios)) {
+                totalHombresPropiosTabla.style.backgroundColor = 'red';
+                alert('El valor total de hombres propios no coincide con la suma desglosada por profesión.');
+              } else {
+                totalHombresPropiosTabla.style.backgroundColor = '';
+              }
+            }
+
+            inputsHombresPropiosProfesion.forEach(function(input) {
+              input.addEventListener('input', validarTotalHombresPropiosProfesion);
+            });
+
+            // Para hombres CONTRATISTAS
+              var inputsHombresContratistasProfesion = document.querySelectorAll('input[name="minas_contratistas_hombres"]');
+
+              function validarTotalHombresContratistasProfesion() {
+                  var suma = 0;
+                  var count = 0;
+
+                  var totalHombresContratistas = document.querySelector('input[id="hombres_contratista"]').value || 0;
+
+                  inputsHombresContratistasProfesion.forEach(function(input) {
+                      if (input.value !== "") {
+                          count++;
+                      }
+                      suma += Number(input.value) || 0;
+                  });
+
+                  var totalHombresContratistasTabla = document.querySelector('input[id="total_contratistas_hombres_profesion"]');
+
+                  if (count !== inputsHombresContratistasProfesion.length && suma <= Number(totalHombresContratistas)) {
+                      totalHombresContratistasTabla.style.backgroundColor = '';
+                      return false;
+                  }
+                  else{
+                    totalHombresContratistasTabla.style.backgroundColor = 'red';
+                  }
+
+                  
+                  totalHombresContratistasTabla.value = suma;
+
+                  if (suma !== Number(totalHombresContratistas)) {
+                      totalHombresContratistasTabla.style.backgroundColor = 'red';
+                      alert('El valor total de hombres contratistas no coincide con la suma desglosada por profesión.');
+                  } else {
+                      totalHombresContratistasTabla.style.backgroundColor = '';
+                  }
+              }
+
+              inputsHombresContratistasProfesion.forEach(function(input) {
+                  input.addEventListener('input', validarTotalHombresContratistasProfesion);
+              });
+
+
+
+          </script>
+
+          <div class="table-responsive">
+            <table class="table" id="tabla_escolaridad">
+                <thead>
+                    <tr>
+                        <th>VIII.Caracterización por escolaridad [N°]</th>
+                        <th colspan="2">Mujeres</th>
+                        <th colspan="2">Hombres</th>
+                        <th>Observaciones</th>
+                    </tr>
+                    <tr>
+                        <th>Nivel de Escolaridad</th>
+                        <th>Propios</th>
+                        <th>Contratistas</th>
+                        <th>Propios</th>
+                        <th>Contratistas</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se repetirán para cada nivel de escolaridad -->
+                    <tr>
+                        <td>Sin Estudios</td>
+                        <td><input type="number" class="form-control" id="sin_estudios_propios_mujeres" name="sin_estudios_propios_mujeres" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id="sin_estudios_contratistas_mujeres" name="sin_estudios_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id="sin_estudios_propios_hombres" name="sin_estudios_propios_hombres" oninput="validarLongitud(this)"></td>
+                        <td><input type="number" class="form-control" id="sin_estudios_contratistas_hombres" name="sin_estudios_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                        <td><input type="text" class="form-control" name="observaciones_sin_estudios" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Enseñanza Media</td>
+                      <td><input type="number" class="form-control" id="Estudios_Media_propios_mujeres" name="sin_estudios_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Estudios_Media_contratistas_mujeres" name="sin_estudios_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Estudios_Media_propios_hombres" name="sin_estudios_propios_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Estudios_Media_contratistas_hombres" name="sin_estudios_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Estudios_Media" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Carreras tecnicas</td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_tecnicas_propios_mujeres" name="sin_estudios_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_tecnicas_contratistas_mujeres" name="sin_estudios_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_tecnicas_propios_hombres" name="sin_estudios_propios_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_tecnicas_contratistas_hombres" name="sin_estudios_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Personas_Carreras_tecnicas" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Carreras profesionales</td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_profesionales_propios_mujeres" name="sin_estudios_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_profesionales_contratistas_mujeres" name="sin_estudios_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_profesionales_propios_hombres" name="sin_estudios_propios_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_Carreras_profesionales_contratistas_hombres" name="sin_estudios_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_Personas_Carreras_profesionales" ></td>
+                    </tr>
+
+                    <tr>
+                      <td>Estudios de Post Grado [maestrías, doctorados, MBA]</td>
+                      <td><input type="number" class="form-control" id="Personas_PostGrado_maestrias_doctorados_MBA_propios_mujeres" name="sin_estudios_propios_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_PostGrado_maestrias_doctorados_MBA_contratistas_mujeres" name="sin_estudios_contratistas_mujeres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_PostGrado_maestrias_doctorados_MBA_propios_hombres" name="sin_estudios_propios_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="number" class="form-control" id="Personas_PostGrado_maestrias_doctorados_MBA_contratistas_hombres" name="sin_estudios_contratistas_hombres" oninput="validarLongitud(this)"></td>
+                      <td><input type="text" class="form-control" name="observaciones_PostGrado" ></td>
+                    </tr>
+                    <tr>
+                      <th>Total</th>
+                      <td><input type="number" class="form-control" id="total_propios_mujeres_escolaridad" name="total_escolaridad_propios_mujeres"></td>
+                      <td><input type="number" class="form-control" id="total_contratistas_mujeres_escolaridad" name="total_escolaridad_contratistas_mujeres" readonly></td>
+                      <td><input type="number" class="form-control" id="total_propios_hombres_escolaridad" name="total_escolaridad_propios_hombres" readonly></td>
+                      <td><input type="number" class="form-control" id="total_contratistas_hombres_escolaridad" name="total_escolaridad_contratistas_hombres" readonly></td>
+                      <td></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+
+            
+          </div><br>
+          <br>
+          <br>
+
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              // Para mujeres propias
+              var inputsMujeresPropiasEscolaridad = document.querySelectorAll('input[name ="sin_estudios_propios_mujeres"]');
+
+              function validarTotalMujeresPropiasEscolaridad() {
+                var suma = 0;
+                var count = 0;
+
+                var totalMujeresPropias = document.querySelector('input[id="mujeres_personal_propio"]').value || 0;
+
+
+                inputsMujeresPropiasEscolaridad.forEach(function(input) {
+                  if (input.value !== "")
+                    count++;
+                  suma += Number(input.value) || 0;
+                });
+
+                var totalMujeresPropiasTabla = document.querySelector('input[id="total_propios_mujeres_escolaridad"]');
+
+                if (count !== inputsMujeresPropiasEscolaridad.length && suma <= Number(totalMujeresPropias)){
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                  return false;
+                }
+                else{
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                }
+                  
+
+                
+                
+                totalMujeresPropiasTabla.value = suma;
+
+                if (suma !== Number(totalMujeresPropias)) {
+                  totalMujeresPropiasTabla.style.backgroundColor = 'red';
+                  alert('El valor total de mujeres propias no coincide con la suma desglosada por escolaridad.');
+                } else {
+                  totalMujeresPropiasTabla.style.backgroundColor = '';
+                }
+              }
+
+              inputsMujeresPropiasEscolaridad.forEach(function(input) {
+                input.addEventListener('input', validarTotalMujeresPropiasEscolaridad);
+              });
+
+              // Para mujeres contratistas
+              var inputsMujeresContratistasEscolaridad = document.querySelectorAll('input[name ="sin_estudios_contratistas_mujeres"]');
+
+                function validarTotalMujeresContratistasEscolaridad() {
+                  var suma = 0;
+                  var count = 0;
+
+                  var totalMujeresContratistas = document.querySelector('input[id="mujeres_contratista"]').value || 0;
+
+
+
+                  inputsMujeresContratistasEscolaridad.forEach(function(input) {
+                    if (input.value !== "")
+                      count++;
+                    suma += Number(input.value) || 0;
+                  });
+
+                  var totalMujeresContratistasTabla = document.querySelector('input[id="total_contratistas_mujeres_escolaridad"]');
+
+                  if (count !== inputsMujeresContratistasEscolaridad.length && suma <= Number(totalMujeresContratistas)){
+                    totalMujeresContratistasTabla.style.backgroundColor = '';
+                    return false;
+                  }
+                  else{
+                    totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                  }
+                    
+
+                  
+                  
+                  totalMujeresContratistasTabla.value = suma;
+
+                  if (suma !== Number(totalMujeresContratistas)) {
+                    totalMujeresContratistasTabla.style.backgroundColor = 'red';
+                    alert('El valor total de mujeres contratistas no coincide con la suma desglosada por escolaridad.');
+                  } else {
+                    totalMujeresContratistasTabla.style.backgroundColor = '';
+                  }
+                }
+
+                inputsMujeresContratistasEscolaridad.forEach(function(input) {
+                  input.addEventListener('input', validarTotalMujeresContratistasEscolaridad);
+                });
+
+                // Para hombres propios
+                var inputsHombresPropiosEscolaridad = document.querySelectorAll('input[name ="sin_estudios_propios_hombres"]');
+
+                
+                function validarTotalHombresPropiosEscolaridad() {
+                  var suma = 0;
+                  var count = 0;
+
+                  var totalHombresPropios = document.querySelector('input[id="hombres_personal_propio"]').value || 0;
+
+                  inputsHombresPropiosEscolaridad.forEach(function(input) {
+                    if (input.value !== "")
+                      count++;
+                    suma += Number(input.value) || 0;
+                  });
+
+                  var totalHombresPropiosTabla = document.querySelector('input[id="total_propios_hombres_escolaridad"]');
+
+                  if (count !== inputsHombresPropiosEscolaridad.length && suma <= Number(totalHombresPropios)){
+                    totalHombresPropiosTabla.style.backgroundColor = '';
+                    return false;
+                  }
+                  else{
+                    totalHombresPropiosTabla.style.backgroundColor = 'red';
+                  }
+                  
+              
+                  
+                  
+                  totalHombresPropiosTabla.value = suma;
+
+
+              
+              
+                  if (suma !== Number(totalHombresPropios)) {
+                    totalHombresPropiosTabla.style.backgroundColor = 'red';
+                    alert('El valor total de hombres propios no coincide con la suma desglosada por de escolaridad.');
+                  } else {
+                    totalHombresPropiosTabla.style.backgroundColor = '';
+                  }
+                }
+              
+                inputsHombresPropiosEscolaridad.forEach(function(input) {
+                  input.addEventListener('input', validarTotalHombresPropiosEscolaridad);
+                });
+
+                // Para hombres contratistas
+                var inputsHombresContratistasEscolaridad = document.querySelectorAll('input[name="sin_estudios_contratistas_hombres"]');
+
+                function validarTotalHombresContratistasEscolaridad() {
+                  var suma = 0;
+                  var count = 0;
+
+                  var totalHombresContratistas = document.querySelector('input[id="hombres_contratista"]').value || 0;
+
+
+
+                  inputsHombresContratistasEscolaridad.forEach(function(input) {
+                    if (input.value !== "")
+                      count++;
+                    suma += Number(input.value) || 0;
+                  });
+
+
+                  var totalHombresContratistasTabla = document.querySelector('input[id="total_contratistas_hombres_escolaridad"]');
+
+                  if (count !== inputsHombresContratistasEscolaridad.length && suma <= Number(totalHombresContratistas)){
+                    totalHombresContratistasTabla.style.backgroundColor = '';
+                    return false;
+                  }
+                  else{
+                    totalHombresContratistasTabla.style.backgroundColor = 'red'
+                  }
+                    
+
+                  
+                  
+                  totalHombresContratistasTabla.value = suma;
+
+                  if (suma !== Number(totalHombresContratistas)) {
+                    totalHombresContratistasTabla.style.backgroundColor = 'red';
+                    alert('El valor total de hombres contratistas no coincide con la suma desglosada por escolaridad.');
+                  } else {
+                    totalHombresContratistasTabla.style.backgroundColor = '';
+                  }
+                }
+
+                inputsHombresContratistasEscolaridad.forEach(function(input) {
+                  input.addEventListener('input', validarTotalHombresContratistasEscolaridad);
+                });
+
+              
+
+            });
+
+            
+          </script>
+
+
+
+
+
+
+          
+
+          
+          
+
+
+          
+          <center><button type="button" class="btn btn-primary btn-lg" onclick="validarSeleccion3();">Guardar</button></center>
+          
+
+      
+        
+      </div>
+
+  </form>
+
+
+
+  <!-- js para limitar el ingreso de cada cuadro a 10 dighitos -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Seleccionar todos los inputs de tipo 'number'
+      var numberInputs = document.querySelectorAll('input[type="number"]');
+    
+      // Agregar un event listener a cada input
+      numberInputs.forEach(function(input) {
+        input.addEventListener('input', function() {
+          // Eliminar cualquier carácter que no sea un dígito o un signo menos
+          this.value = this.value.replace(/[^0-9-]/g, '');
+        });
+      });
+    });
+
+    function validarLongitud(elemento) {
+        if (elemento.value.length > 10) { // Asume que 99999 es el máximo número de caracteres que deseas permitir
+            elemento.value = elemento.value.slice(0, 5);
+        }
+        if (elemento.value < 0) { // Asegurar que el número sea positivo
+            elemento.value = '';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+      // Selecciona todos los campos de mujeres propias por grupo de edad.
+      const edadInputs = document.querySelectorAll('[name^="mujeres_"][name$="_propios"]');
+
+      // Función para sumar los valores y actualizar el total.
+      function updateTotal() {
+        let sum = 0;
+        edadInputs.forEach(input => {
+          const value = Number(input.value) || 0;
+          sum += value;
+        });
+
+        const totalMujeresPropias = document.querySelector('[name="total_mujeres_propias"]');
+        if (sum > Number(totalMujeresPropias.value)) {
+          // Cambia el color de fondo a rojo y muestra una alerta si la suma excede el total.
+          totalMujeresPropias.style.backgroundColor = 'red';
+          alert('El valor total de mujeres propias no coincide con la suma desglosada por edad.');
+        } else {
+          // Si la suma es igual o menor, quita el color de fondo.
+          totalMujeresPropias.style.backgroundColor = '';
+        }
+      }
+
+      // Añade un "event listener" a cada campo de entrada de grupo de edad.
+      edadInputs.forEach(input => {
+        input.addEventListener('input', updateTotal);
+      });
+    });
+
+    
+
+
+
+  </script>
+
+  <!-- Dotación total [Mujeres y Hombres]--> 
+  <script>
+    function actualizarTotales() {
+      // Obtener valores de personal propio
+      var mujeresPropio = parseInt(document.getElementsByName('mujeres_personal_propio')[0].value) || 0;
+      var hombresPropio = parseInt(document.getElementsByName('hombres_personal_propio')[0].value) || 0;
+    
+      // Obtener valores de personal contratista
+      var mujeresContratista = parseInt(document.getElementsByName('mujeres_contratista')[0].value) || 0;
+      var hombresContratista = parseInt(document.getElementsByName('hombres_contratista')[0].value) || 0;
+    
+      // Calcular totales
+      var totalPropio = mujeresPropio + hombresPropio;
+      var totalContratista = mujeresContratista + hombresContratista;
+    
+      // Actualizar valores totales
+      document.getElementsByName('total_personal_propio')[0].value = totalPropio;
+      document.getElementsByName('total_personal_contratista')[0].value = totalContratista;
+    }
+    
+    // Añadir evento 'input' a los campos numéricos para actualizar los totales automáticamente
+    document.getElementsByName('mujeres_personal_propio')[0].addEventListener('input', actualizarTotales);
+    document.getElementsByName('hombres_personal_propio')[0].addEventListener('input', actualizarTotales);
+    document.getElementsByName('mujeres_contratista')[0].addEventListener('input', actualizarTotales);
+    document.getElementsByName('hombres_contratista')[0].addEventListener('input', actualizarTotales);
+  </script>
+
+  <!-- es para limitar las opciones de seleccion multiple en la primera pregunta -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Obtener todos los checkboxes con el nombre 'tipo_proveedor[]'
+      var checkboxes = document.querySelectorAll('input[name="tipo_proveedor[]"]');
+
+      // Esta función actualiza el estado de los checkboxes de la pregunta específica
+      function updateCheckboxState() {
+        var checkedCount = 0;
+        checkboxes.forEach(function(checkbox) {
+          if (checkbox.checked) checkedCount++;
+        });
+
+        // Si hay 3 checkboxes marcados, deshabilitar los no marcados de esta pregunta
+        if (checkedCount >= 3) {
+          checkboxes.forEach(function(checkbox) {
+            if (!checkbox.checked) checkbox.disabled = true;
+          });
+        } else {
+          // Si hay menos de 3, asegurarse de que todos estén habilitados
+          checkboxes.forEach(function(checkbox) {
+            checkbox.disabled = false;
+          });
+        }
+      }
+
+      // Agregar el evento 'change' a cada checkbox de la pregunta específica
+      checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', updateCheckboxState);
+      });
+    });
+  </script>
+
+  <!-- es para limitar las opciones de seleccion multiple en la segunda pregunta -->
+  <script>
+    function limitarSeleccion(maxSeleccion) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="procesos_cadena_valor[]"]');
+        var seleccionados = 0;
+    
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                seleccionados++;
+            }
+        });
+    
+        if (seleccionados >= maxSeleccion) {
+            checkboxes.forEach(function(checkbox) {
+                if (!checkbox.checked) {
+                    checkbox.disabled = true;
+                }
+            });
+        } else {
+            checkboxes.forEach(function(checkbox) {
+                checkbox.disabled = false;
+            });
+        }
+    }
+    
+    document.querySelectorAll('input[type="checkbox"][name="procesos_cadena_valor[]"]').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            limitarSeleccion(3);
+        });
+    });
+    
+    window.onload = function() {
+        limitarSeleccion(3); // Asegúrate de que se aplique el límite al cargar la página
+    };
+  </script>
+
+ 
+
+  <!-- suma de Caracterización por Edad [N°]--> 
+  <script>
+    // Función para calcular los totales
+    function calcularTotales() {
+      // Inicializa los totales
+      var totalMujeresPropias = 0;
+      var totalMujeresContratistas = 0;
+      var totalHombresPropios = 0;
+      var totalHombresContratistas = 0;
+    
+      // Itera sobre cada fila de entrada y acumula los valores para calcular los totales
+      document.querySelectorAll('tbody tr').forEach(tr => {
+        const mujeresPropias = tr.querySelector('input[name^="mujeres"][name$="_propios"]');
+        const mujeresContratistas = tr.querySelector('input[name^="mujeres"][name$="_contratistas"]');
+        const hombresPropios = tr.querySelector('input[name^="hombres"][name$="_propios"]');
+        const hombresContratistas = tr.querySelector('input[name^="hombres"][name$="_contratistas"]');
+    
+        if (mujeresPropias) {
+          totalMujeresPropias += parseInt(mujeresPropias.value) || 0;
+        }
+        if (mujeresContratistas) {
+          totalMujeresContratistas += parseInt(mujeresContratistas.value) || 0;
+        }
+        if (hombresPropios) {
+          totalHombresPropios += parseInt(hombresPropios.value) || 0;
+        }
+        if (hombresContratistas) {
+          totalHombresContratistas += parseInt(hombresContratistas.value) || 0;
+        }
+      });
+    
+      // Asigna los totales calculados a los campos correspondientes
+      document.querySelector('input[name="total_mujeres_propios"]').value = totalMujeresPropias;
+      document.querySelector('input[name="total_mujeres_contratistas"]').value = totalMujeresContratistas;
+      document.querySelector('input[name="total_hombres_propios"]').value = totalHombresPropios;
+      document.querySelector('input[name="total_hombres_contratistas"]').value = totalHombresContratistas;
+    }
+    
+    // Añade el evento 'input' a todos los campos de entrada numérica para recalcular los totales cuando su valor cambie
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', calcularTotales);
+    });
+    
+    // Calcula los totales inicialmente
+    window.addEventListener('load', calcularTotales);
+  </script>
+
+  <!-- suma antiguedad de la empresa -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function calcularTotales() {
+        let totalMujeresPropias = 0;
+        let totalMujeresContratistas = 0;
+        let totalHombresPropios = 0;
+        let totalHombresContratistas = 0;
+    
+        // Sumar los valores para mujeres propias y contratistas
+        document.querySelectorAll('input[name="antiguedad_mujeres_propias"]').forEach(function(input) {
+          totalMujeresPropias += Number(input.value) || 0;
+        });
+        document.querySelectorAll('input[name="antiguedad_mujeres_contratistas"]').forEach(function(input) {
+          totalMujeresContratistas += Number(input.value) || 0;
+        });
+        
+        // Sumar los valores para hombres propios y contratistas
+        document.querySelectorAll('input[name^="antiguedad_hombres_propios"]').forEach(function(input) {
+          totalHombresPropios += Number(input.value) || 0;
+        });
+        document.querySelectorAll('input[name^="antiguedad_hombres_contratistas"]').forEach(function(input) {
+          totalHombresContratistas += Number(input.value) || 0;
+        });
+    
+        // Establecer los totales en los campos correspondientes
+        document.querySelector('input[name="total_antiguedad_mujeres_propias"]').value = totalMujeresPropias;
+        document.querySelector('input[name="total_antiguedad_mujeres_contratistas"]').value = totalMujeresContratistas;
+        document.querySelector('input[name="total_antiguedad_hombres_propios"]').value = totalHombresPropios;
+        document.querySelector('input[name="total_antiguedad_hombres_contratistas"]').value = totalHombresContratistas;
+      }
+    
+      // Agregar evento 'input' a todos los campos numéricos que no son de solo lectura
+      document.querySelectorAll('input[type="number"]:not([readonly])').forEach(function(input) {
+        input.addEventListener('input', calcularTotales);
+      });
+    
+      // Calcular totales inicialmente
+      calcularTotales();
+    });
+  </script>
+
+  <!-- suma por cargo-->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Función para calcular los totales para la tabla de "Participación por tipo de cargo"
+      function calcularTotalesCargo() {
+        var totalPropiosMujeres = 0;
+        var totalContratistasMujeres = 0;
+        var totalPropiosHombres = 0;
+        var totalContratistasHombres = 0;
+    
+        // Sumar valores de mujeres propias
+        document.querySelectorAll('#tabla_tipo_cargo input[name="total_propios_mujeres"]').forEach(function(input) {
+          totalPropiosMujeres += parseInt(input.value) || 0;
+        });
+    
+        // Sumar valores de mujeres contratistas
+        document.querySelectorAll('#tabla_tipo_cargo input[name="directores_contratistas_mujeres"]').forEach(function(input) {
+          totalContratistasMujeres += parseInt(input.value) || 0;
+        });
+    
+        // Sumar valores de hombres propios
+        document.querySelectorAll('#tabla_tipo_cargo input[name="directores_propios_hombre"]').forEach(function(input) {
+          totalPropiosHombres += parseInt(input.value) || 0;
+        });
+    
+        // Sumar valores de hombres contratistas
+        document.querySelectorAll('#tabla_tipo_cargo input[name="directores_contratistas_hombres"]').forEach(function(input) {
+          totalContratistasHombres += parseInt(input.value) || 0;
+        });
+    
+        // Actualizar los totales en los campos de solo lectura
+        document.getElementById('total_cargo_mujeres_propias').value = totalPropiosMujeres;
+        document.getElementById('total_cargo_mujeres_contratistas').value = totalContratistasMujeres;
+        document.getElementById('total_cargo_hombres_propios').value = totalPropiosHombres;
+        document.getElementById('total_cargo_hombres_contratistas').value = totalContratistasHombres;
+      }
+    
+      // Agregar listeners a los campos de entrada para recalcular los totales cuando cambien
+      var inputsCargo = document.querySelectorAll('#tabla_tipo_cargo input[type="number"]');
+      inputsCargo.forEach(function(input) {
+        input.addEventListener('input', calcularTotalesCargo);
+      });
+    
+      // Calcula los totales inicialmente en caso de que los campos estén pre-rellenados
+      calcularTotalesCargo();
+    });
+  </script>
+
+
+  <!-- suma de profesion u oficio--> 
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Función para calcular los totales para la tabla de "Participación por tipo de profesión u oficio"
+    function calcularTotalesProfesionOficio() {
+      var totalPropiosMujeres = 0;
+      var totalContratistasMujeres = 0;
+      var totalPropiosHombres = 0;
+      var totalContratistasHombres = 0;
+  
+      // Sumar valores de mujeres propias
+      document.querySelectorAll('#tabla_profesion_oficio input[name$="_propios_mujeres"]').forEach(function(input) {
+        totalPropiosMujeres += parseInt(input.value) || 0;
+      });
+  
+      // Sumar valores de mujeres contratistas
+      document.querySelectorAll('#tabla_profesion_oficio input[name$="_contratistas_mujeres"]').forEach(function(input) {
+        totalContratistasMujeres += parseInt(input.value) || 0;
+      });
+  
+      // Sumar valores de hombres propios
+      document.querySelectorAll('#tabla_profesion_oficio input[name$="_propios_hombres"]').forEach(function(input) {
+        totalPropiosHombres += parseInt(input.value) || 0;
+      });
+  
+      // Sumar valores de hombres contratistas
+      document.querySelectorAll('#tabla_profesion_oficio input[name$="_contratistas_hombres"]').forEach(function(input) {
+        totalContratistasHombres += parseInt(input.value) || 0;
+      });
+  
+      // Actualizar los totales en los campos de solo lectura
+      document.getElementById('total_propios_mujeres_profesion').value = totalPropiosMujeres;
+      document.getElementById('total_contratistas_mujeres_profesion').value = totalContratistasMujeres;
+      document.getElementById('total_propios_hombres_profesion').value = totalPropiosHombres;
+      document.getElementById('total_contratistas_hombres_profesion').value = totalContratistasHombres;
+    }
+  
+    // Agregar listeners a los campos de entrada para recalcular los totales cuando cambien
+    var inputsProfesionOficio = document.querySelectorAll('#tabla_profesion_oficio input[type="number"]');
+    inputsProfesionOficio.forEach(function(input) {
+      input.addEventListener('input', calcularTotalesProfesionOficio);
+    });
+  
+    // Calcula los totales inicialmente en caso de que los campos estén pre-rellenados
+    calcularTotalesProfesionOficio();
+  });
+  </script>
+
+  <!-- Caracterización por escolaridad [N°]--> 
+ 
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Función para calcular los totales para la tabla de "Caracterización por escolaridad"
+    function calcularTotalesEscolaridad() {
+      var totalPropiosMujeres = 0;
+      var totalContratistasMujeres = 0;
+      var totalPropiosHombres = 0;
+      var totalContratistasHombres = 0;
+  
+      // Sumar valores de mujeres propias
+      document.querySelectorAll('#tabla_escolaridad input[name$="sin_estudios_propios_mujeres"]').forEach(function(input) {
+        totalPropiosMujeres += parseInt(input.value) || 0;
+      });
+  
+      // Sumar valores de mujeres contratistas
+      document.querySelectorAll('#tabla_escolaridad input[name$="sin_estudios_contratistas_mujeres"]').forEach(function(input) {
+        totalContratistasMujeres += parseInt(input.value) || 0;
+      });
+
+      // Sumar valores de hombres propios
+      document.querySelectorAll('#tabla_escolaridad input[name$="sin_estudios_propios_hombres"]').forEach(function(input) {
+        totalPropiosHombres += parseInt(input.value) || 0;
+      });
+  
+      // Sumar valores de hombres contratistas
+      document.querySelectorAll('#tabla_escolaridad input[name$="sin_estudios_contratistas_hombres"]').forEach(function(input) {
+        totalContratistasHombres += parseInt(input.value) || 0;
+      });
+  
+      // Actualizar los totales en los campos de solo lectura
+      document.getElementById('total_propios_mujeres_escolaridad').value = totalPropiosMujeres;
+      document.getElementById('total_contratistas_mujeres_escolaridad').value = totalContratistasMujeres;
+      document.getElementById('total_propios_hombres_escolaridad').value = totalPropiosHombres;
+      document.getElementById('total_contratistas_hombres_escolaridad').value = totalContratistasHombres;
+    }
+  
+    // Agregar listeners a los campos de entrada para recalcular los totales cuando cambien
+    var inputsEscolaridad = document.querySelectorAll('#tabla_escolaridad input[type="number"]');
+    inputsEscolaridad.forEach(function(input) {
+      input.addEventListener('input', calcularTotalesEscolaridad);
+    });
+  
+    // Calcula los totales inicialmente en caso de que los campos estén pre-rellenados
+    calcularTotalesEscolaridad();
+  });
+
+  
+ </script>
+
+
+  <!-- validacion del formulario y que guarde los datos de l fomulario al volver atras--> 
+ 
+  <script>
+    document.getElementById("company-rut").oninput = function() {
+        var rutPattern = /^\d{0,8}(-[\dkK]{0,1})?$/; // Permite escribir hasta 8 dígitos y opcionalmente el guión y el dígito verificador que puede ser un número o 'k' o 'K'
+        
+        if (!rutPattern.test(this.value)) {
+            this.value = this.value.slice(0, -1); // Eliminar el último caracter no válido
+        }
+    };
+    document.getElementById('personal-form').addEventListener('submit', function(event) {
+      if (!validarSeleccion3()) {
+        // Si la validación es incorrecta, detenemos el envío del formulario
+        event.preventDefault();
+      }
+    });
+    
+    function validarSeleccion3() {
+      var todoCorrecto = true;
+      
+       // Validación para la primera selección múltiple
+       var seleccionadoTipoProveedor = Array.from(document.querySelectorAll('#miFormulario1 .form-check-input'))
+        .some(checkbox => checkbox.checked);
+    
+      // Validación para la segunda selección múltiple
+      var seleccionadoProcesosCadenaValor = Array.from(document.querySelectorAll('#miFormulario2 .form-check-input'))
+        .some(checkbox => checkbox.checked);
+      
+      // Mensaje de error si no se seleccionó al menos una casilla en las selecciones múltiples
+      if (!seleccionadoTipoProveedor || !seleccionadoProcesosCadenaValor) {
+        alert('Por favor, seleccione al menos una opción en cada categoría de selección múltiple.');
+        todoCorrecto = false;
+      }
+      
+      // Validación para todas las tablas que requieren al menos un valor mayor a cero
+      var idsTablasParaValidar = [
+        'tabla_tipo_cargo',
+        'tabla_escolaridad',
+        'tabla_profesion_oficio',
+        'tabla_cargos_y_oficios',
+        'tabla_otros_datos'
+      ];
+    
+      // Recorremos todos los ids y validamos las tablas
+      idsTablasParaValidar.forEach(function(idTabla) {
+        if (!validarTabla(idTabla)) {
+          alert(`Asegúrese de que haya ingresado al menos un valor mayor a cero en la tabla: ${idTabla}.`);
+          todoCorrecto = false;
+        }
+      });
+
+      
+      
+      if (todoCorrecto) {
+        enviarDatos();  // Llamar a enviarDatos solo si todas las validaciones son exitosas
+    }
+    
+    // Guardar los valores en la sesión
+    }
+    
+
+    
+    // Función para validar que al menos un campo de la tabla tenga un valor mayor a 0
+    function validarTabla(idTabla) {
+      var tabla = document.getElementById(idTabla);
+      if (tabla) {
+        var inputs = tabla.querySelectorAll('input[type="number"]:not([readonly])');
+        return Array.from(inputs).some(input => parseInt(input.value, 10) > 0);
+      } else {
+        console.warn(`La tabla con id ${idTabla} no existe.`);
+        return true; // Si la tabla no existe, no impide la validación.
+      }
+    }
+
+    function enviarDatos() {
+      // Recolectando los valores de los checkboxes seleccionados
+      var checkboxesSeleccionados = document.querySelectorAll('input[name="tipo_proveedor[]"]:checked');
+      var valoresSeleccionados = Array.from(checkboxesSeleccionados).map(cb => cb.value);
+
+      var checkboxesSeleccionados2 = document.querySelectorAll('input[name="procesos_cadena_valor[]"]:checked');
+      var valoresSeleccionados2 = Array.from(checkboxesSeleccionados2).map(cb => cb.value);
+      
+      var totalPersonalPropio = document.getElementsByName('total_personal_propio')[0].value;
+      var totalPersonalContratistaElement = document.getElementsByName('total_personal_contratista')[0];  
+      var totalPersonalContratista = totalPersonalContratistaElement ? totalPersonalContratistaElement.value : '';  // Obtiene el valor si el elemento existe
+      
+      var mujeres1830Propios = document.getElementsByName('mujeres_18_30_propios')[0].value;
+      var mujeres1830Contratistas = document.getElementsByName('mujeres_18_30_contratistas')[0].value;
+      var hombres1830Propios = document.getElementsByName('hombres_18_30_propios')[0].value;
+      var hombres1830Contratistas = document.getElementsByName('hombres_18_30_contratistas')[0].value;
+      var observaciones1830 = document.getElementsByName('observaciones_18_30')[0].value;
+      //edad 31-40
+      var mujeres3140Propios = document.getElementsByName('mujeres_31_40_propios')[0].value;
+      var mujeres3140Contratistas = document.getElementsByName('mujeres_31_40_contratistas')[0].value;
+      var hombres3140Propios = document.getElementsByName('hombres_31_40_propios')[0].value;
+      var hombres3140Contratistas = document.getElementsByName('hombres_31_40_contratistas')[0].value;
+      var observaciones3140 = document.getElementsByName('observaciones_31_40')[0].value;
+
+      //edad 41-50
+      var mujeres4150Propios = document.getElementsByName('mujeres_41_50_propios')[0].value;
+      var mujeres4150Contratistas = document.getElementsByName('mujeres_41_50_contratistas')[0].value;
+      var hombres4150Propios = document.getElementsByName('hombres_41_50_propios')[0].value;
+      var hombres4150Contratistas = document.getElementsByName('hombres_41_50_contratistas')[0].value;
+      var observaciones4150 = document.getElementsByName('observaciones_41_50')[0].value;
+
+      //edad 51-60
+      var mujeres5160Propios = document.getElementsByName('mujeres_51_60_propios')[0].value;
+      var mujeres5160Contratistas = document.getElementsByName('mujeres_51_60_contratistas')[0].value;
+      var hombres5160Propios = document.getElementsByName('hombres_51_60_propios')[0].value;
+      var hombres5160Contratistas = document.getElementsByName('hombres_51_60_contratistas')[0].value;
+      var observaciones5160 = document.getElementsByName('observaciones_51_60')[0].value;
+
+      //edad mayop a 61
+      var mujeres61Propios = document.getElementsByName('mujeres_61_propios')[0].value;
+      var mujeres61Contratistas = document.getElementsByName('mujeres_61_contratistas')[0].value;
+      var hombres61Propios = document.getElementsByName('hombres_61_propios')[0].value;
+      var hombres61Contratistas = document.getElementsByName('hombres_61_contratistas')[0].value;
+      var observaciones61 = document.getElementsByName('observaciones_61')[0].value;
+
+      //totales edad 
+      var mujeresTotalPropios = document.getElementsByName('total_mujeres_propios')[0].value;
+      var mujeresTotalContratistas = document.getElementsByName('total_mujeres_contratistas')[0].value;
+      var hombresTotalPropios = document.getElementsByName('total_hombres_propios')[0].value;
+      var hombresTotalContratistas = document.getElementsByName('total_hombres_contratistas')[0].value;
+      
+      //observaciones de antiguedad esta por name 
+      var observacionesMenos1 = document.getElementsByName('observaciones_menos_1')[0].value;
+      var observacionesMenos15 = document.getElementsByName('observaciones_menos_1_5')[0].value;
+      var observacionesMenos610 = document.getElementsByName('observaciones_menos_6_10')[0].value;
+      var observacionesMenos1120 = document.getElementsByName('observaciones_menos_11_20')[0].value;
+      var observacionesMenos21 = document.getElementsByName('observaciones_menos_21')[0].value;
+
+      //totales antiguedad 
+      var mujeresTotalAntiguedadPropios = document.getElementsByName('total_antiguedad_mujeres_propias')[0].value;
+      var mujeresTotalAntiguedadContratistas = document.getElementsByName('total_antiguedad_mujeres_contratistas')[0].value;
+      var hombresTotalAntiguedadPropios = document.getElementsByName('total_antiguedad_hombres_propios')[0].value;
+      var hombresTotalAntiguedadContratistas = document.getElementsByName('total_antiguedad_hombres_contratistas')[0].value;
+
+      //observaciones de cargos esta por name 
+      var observacionesDirectores = document.getElementsByName('observaciones_directores')[0].value;
+      var observacionesSubgerentesSuperintendentes = document.getElementsByName('observaciones_Subgerentes_Superintendentes')[0].value;
+      var observacionesJefasAreas = document.getElementsByName('observaciones_Jefas_areas')[0].value;
+      var observacionesSupervisoras = document.getElementsByName('observaciones_Supervisoras')[0].value;
+      var observacionesProfesionales = document.getElementsByName('observaciones_Profesionales')[0].value;
+      var observacionesAnalistas = document.getElementsByName('observaciones_Analistas')[0].value;
+      var observacionesOperadoras = document.getElementsByName('observaciones_Operadoras')[0].value;
+      var observacionesMantenedoras = document.getElementsByName('observaciones_Mantenedoras')[0].value;
+      var observacionesAdministrativo = document.getElementsByName('observaciones_Administrativo')[0].value;
+
+      //totales cargos 
+      var mujeresTotalCargoPropios = document.getElementsByName('total_cargo_mujeres_propias')[0].value;
+      var mujeresTotalCargoContratistas = document.getElementsByName('total_cargo_mujeres_contratistas')[0].value;
+      var hombresTotalCargoPropios = document.getElementsByName('total_cargo_hombres_propios')[0].value;
+      var hombresTotalCargoContratistas = document.getElementsByName('total_cargo_hombres_contratistas')[0].value;
+      
+      //observaciones de proefesion esta por name 
+      var observacionesMinas = document.getElementsByName('observaciones_minas')[0].value;
+      var observacionesMetalurgiaQuimica = document.getElementsByName('observaciones_metalurgia_quimica')[0].value;
+      var observacionesElectricaMecanica = document.getElementsByName('observaciones_electrica_mecanica')[0].value;
+      var observacionesIndustrialComercial = document.getElementsByName('observaciones_industrial_comercial')[0].value;
+      var observacionesOtrasIngenierias = document.getElementsByName('observaciones_otras_ingenierias')[0].value;
+      var observacionesCarrerasTecnicas = document.getElementsByName('observaciones_carreras_tecnicas')[0].value;
+      var observacionesOtrasCarreras = document.getElementsByName('observaciones_otras_carreras')[0].value;
+      var observacionesSinProfesion = document.getElementsByName('observaciones_sin_profesion')[0].value;
+
+
+      //totales profesion 
+      var mujeresTotalProfesionPropios = document.getElementsByName('total_propios_mujeres_profesion')[0].value;
+      var mujeresTotalProfesionContratistas = document.getElementsByName('total_contratistas_mujeres_profesion')[0].value;
+      var hombresTotalProfesionPropios = document.getElementsByName('total_propios_hombres_profesion')[0].value;
+      var hombresTotalProfesionContratistas = document.getElementsByName('total_contratistas_hombres_profesion')[0].value;
+
+      //observaciones de escolaridad esta por name 
+      var observacionesSinEstudios = document.getElementsByName('observaciones_sin_estudios')[0].value;
+      var observacionesEstudiosMedia = document.getElementsByName('observaciones_Estudios_Media')[0].value;
+      var observacionesPersonasCarrerasTecnicas = document.getElementsByName('observaciones_Personas_Carreras_tecnicas')[0].value;
+      var observacionesPersonasCarrerasProfesionales = document.getElementsByName('observaciones_Personas_Carreras_profesionales')[0].value;
+      var observacionesPostGrado = document.getElementsByName('observaciones_PostGrado')[0].value;
+
+
+      //totales escolaridad 
+      var mujeresTotalEscolaridadPropios = document.getElementsByName('total_escolaridad_propios_mujeres')[0].value;
+      var mujeresTotalEscolaridadContratistas = document.getElementsByName('total_escolaridad_contratistas_mujeres')[0].value;
+      var hombresTotalEscolaridadPropios = document.getElementsByName('total_escolaridad_propios_hombres')[0].value;
+      var hombresTotalEscolaridadContratistas = document.getElementsByName('total_escolaridad_contratistas_hombres')[0].value;
+  
+      var datos = {
+          company_name: document.getElementById('company-name').value,
+          company_rut: document.getElementById('company-rut').value,
+          total_personal_propio: totalPersonalPropio,
+          total_personal_contratista: document.getElementsByName('total_personal_contratista')[0].value,  // Igualmente para otro campo por name
+          tipo_proveedor: valoresSeleccionados, // Esto crea un array con los valores seleccionados
+          procesos_cadena_valor: valoresSeleccionados2,
+          mujeres_18_30_propios: mujeres1830Propios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          mujeres_18_30_contratistas: mujeres1830Contratistas || "0",
+          hombres_18_30_propios: hombres1830Propios || "0",
+          hombres_18_30_contratistas: hombres1830Contratistas || "0",
+          observaciones_18_30: observaciones1830 || "",
+          //edad 31-40
+          mujeres_31_40_propios: mujeres3140Propios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          mujeres_31_40_contratistas: mujeres3140Contratistas || "0",
+          hombres_31_40_propios: hombres3140Propios || "0",
+          hombres_31_40_contratistas: hombres3140Contratistas || "0",
+          observaciones_31_40: observaciones3140 || "",
+          //41_50
+          mujeres_41_50_propios: mujeres4150Propios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          mujeres_41_50_contratistas: mujeres4150Contratistas || "0",
+          hombres_41_50_propios: hombres4150Propios || "0",
+          hombres_41_50_contratistas: hombres4150Contratistas || "0",
+          observaciones_41_50: observaciones4150 || "",
+          //41_50
+          mujeres_51_60_propios: mujeres5160Propios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          mujeres_51_60_contratistas: mujeres5160Contratistas || "0",
+          hombres_51_60_propios: hombres5160Propios || "0",
+          hombres_51_60_contratistas: hombres5160Contratistas || "0",
+          observaciones_51_60: observaciones5160 || "",
+
+          //61
+          mujeres_61_propios: mujeres61Propios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          mujeres_61_contratistas: mujeres61Contratistas || "0",
+          hombres_61_propios: hombres61Propios || "0",
+          hombres_61_contratistas: hombres61Contratistas || "0",
+          observaciones_61: observaciones61 || "",
+
+          //totales
+          total_mujeres_propios: mujeresTotalPropios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+          total_mujeres_contratistas: mujeresTotalContratistas || "0",
+          total_hombres_propios: hombresTotalPropios || "0",
+          total_hombres_contratistas: hombresTotalContratistas || "0",
+         
+
+          // por antiguedad -1
+          antiguedad_menos_1_mujeres_propias: document.getElementById('antiguedad_menos_1_mujeres_propias').value,
+          antiguedad_menos_1_mujeres_contratistas: document.getElementById('antiguedad_menos_1_mujeres_contratistas').value,
+          antiguedad_menos_1_hombres_propios: document.getElementById('antiguedad_menos_1_hombres_propios').value,
+          antiguedad_menos_1_hombres_contratistas: document.getElementById('antiguedad_menos_1_hombres_contratistas').value,
+          observaciones_menos_1: observacionesMenos1 || "",
+
+          // por antiguedad 1-5
+          antiguedad_menos_1_5_mujeres_propias: document.getElementById('antiguedad_menos_1_5_mujeres_propias').value,
+          antiguedad_menos_1_5_mujeres_contratistas: document.getElementById('antiguedad_menos_1_5_mujeres_contratistas').value,
+          antiguedad_menos_1_5_hombres_propios: document.getElementById('antiguedad_menos_1_5_hombres_propios').value,
+          antiguedad_menos_1_5_hombres_contratistas: document.getElementById('antiguedad_menos_1_5_hombres_contratistas').value,
+          observaciones_menos_1_5: observacionesMenos15 || "",
+
+           // por antiguedad 6-10
+           antiguedad_menos_6_10_mujeres_propias: document.getElementById('antiguedad_menos_6_10_mujeres_propias').value,
+           antiguedad_menos_6_10_mujeres_contratistas: document.getElementById('antiguedad_menos_6_10_mujeres_contratistas').value,
+           antiguedad_menos_6_10_hombres_propios: document.getElementById('antiguedad_menos_6_10_hombres_propios').value,
+           antiguedad_menos_6_10_hombres_contratistas: document.getElementById('antiguedad_menos_6_10_hombres_contratistas').value,
+           observaciones_menos_6_10: observacionesMenos610 || "",
+
+           // por antiguedad 11-20
+           antiguedad_menos_11_20_mujeres_propias: document.getElementById('antiguedad_menos_11_20_mujeres_propias').value,
+           antiguedad_menos_11_20_mujeres_contratistas: document.getElementById('antiguedad_menos_11_20_mujeres_contratistas').value,
+           antiguedad_menos_11_20_hombres_propios: document.getElementById('antiguedad_menos_11_20_hombres_propios').value,
+           antiguedad_menos_11_20_hombres_contratistas: document.getElementById('antiguedad_menos_11_20_hombres_contratistas').value,
+           observaciones_menos_11_20: observacionesMenos1120 || "",
+
+           // por antiguedad 21
+           antiguedad_menos_21_mujeres_propias: document.getElementById('antiguedad_menos_21_mujeres_propias').value,
+           antiguedad_menos_21_mujeres_contratistas: document.getElementById('antiguedad_menos_21_mujeres_contratistas').value,
+           antiguedad_menos_21_hombres_propios: document.getElementById('antiguedad_menos_21_hombres_propios').value,
+           antiguedad_menos_21_hombres_contratistas: document.getElementById('antiguedad_menos_21_hombres_contratistas').value,
+           observaciones_menos_21: observacionesMenos21 || "",
+
+           //totales
+           total_antiguedad_mujeres_propias: mujeresTotalAntiguedadPropios || "0", // Usamos "0" como valor por defecto si el campo está vacío
+           total_antiguedad_mujeres_contratistas: mujeresTotalAntiguedadContratistas || "0",
+           total_antiguedad_hombres_propios: hombresTotalAntiguedadPropios || "0",
+           total_antiguedad_hombres_contratistas: hombresTotalAntiguedadContratistas || "0",
+
+           // por CARGO directores
+           directores_propios_mujeres: document.getElementById('directores_propios_mujeres').value,
+           directores_contratistas_mujeres: document.getElementById('directores_contratistas_mujeres').value,
+           directores_propios_hombres: document.getElementById('directores_propios_hombres').value,
+           directores_contratistas_hombres: document.getElementById('directores_contratistas_hombres').value,
+           observaciones_directores: observacionesDirectores || "",
+
+           // por CARGO Superintendentes
+           Subgerentes_Superintendentes_propios_mujeres: document.getElementById('Subgerentes_Superintendentes_propios_mujeres').value,
+           Subgerentes_Superintendentes_contratistas_mujeres: document.getElementById('Subgerentes_Superintendentes_contratistas_mujeres').value,
+           Subgerentes_Superintendentes_propios_hombres: document.getElementById('Subgerentes_Superintendentes_propios_hombres').value,
+           Subgerentes_Superintendentes_contratistas_hombres: document.getElementById('Subgerentes_Superintendentes_contratistas_hombres').value,
+           observaciones_Subgerentes_Superintendentes: observacionesSubgerentesSuperintendentes || "",
+           
+           // por CARGO Jefas de areas
+           Jefas_areas_propios_mujeres: document.getElementById('Jefas_areas_propios_mujeres').value,
+           Jefas_areas_contratistas_mujeres: document.getElementById('Jefas_areas_contratistas_mujeres').value,
+           Jefas_areas_propios_hombres: document.getElementById('Jefas_areas_propios_hombres').value,
+           Jefas_areas_contratistas_hombres: document.getElementById('Jefas_areas_contratistas_hombres').value,
+           observaciones_Jefas_areas: observacionesJefasAreas || "",
+
+           // por CARGO supervisores
+           Supervisoras_propios_mujeres: document.getElementById('Supervisoras_propios_mujeres').value,
+           Supervisoras_contratistas_mujeres: document.getElementById('Supervisoras_contratistas_mujeres').value,
+           Supervisoras_propios_hombres: document.getElementById('Supervisoras_propios_hombres').value,
+           Supervisoras_contratistas_hombres: document.getElementById('Supervisoras_contratistas_hombres').value,
+           observaciones_Supervisoras: observacionesSupervisoras || "",
+
+           // por CARGO profesionales
+           Profesionales_propios_mujeres: document.getElementById('Profesionales_propios_mujeres').value,
+           Profesionales_contratistas_mujeres: document.getElementById('Profesionales_contratistas_mujeres').value,
+           Profesionales_propios_hombres: document.getElementById('Profesionales_propios_hombres').value,
+           Profesionales_contratistas_hombres: document.getElementById('Profesionales_contratistas_hombres').value,
+           observaciones_Profesionales: observacionesProfesionales || "",
+
+           // por CARGO Analista
+           Analistas_propios_mujeres: document.getElementById('Analistas_propios_mujeres').value,
+           Analistas_contratistas_mujeres: document.getElementById('Analistas_contratistas_mujeres').value,
+           Analistas_propios_hombres: document.getElementById('Analistas_propios_hombres').value,
+           Analistas_contratistas_hombres: document.getElementById('Analistas_contratistas_hombres').value,
+           observaciones_Analistas: observacionesAnalistas || "",
+
+           // por CARGO Operadoras
+           Operadoras_propios_mujeres: document.getElementById('Operadoras_propios_mujeres').value,
+           Operadoras_contratistas_mujeres: document.getElementById('Operadoras_contratistas_mujeres').value,
+           Operadoras_propios_hombres: document.getElementById('Operadoras_propios_hombres').value,
+           Operadoras_contratistas_hombres: document.getElementById('Operadoras_contratistas_hombres').value,
+           observaciones_Operadoras: observacionesOperadoras || "",
+
+           // por CARGO Mantenedoras
+           Mantenedoras_propios_mujeres: document.getElementById('Mantenedoras_propios_mujeres').value,
+           Mantenedoras_contratistas_mujeres: document.getElementById('Mantenedoras_contratistas_mujeres').value,
+           Mantenedoras_propios_hombres: document.getElementById('Mantenedoras_propios_hombres').value,
+           Mantenedoras_contratistas_hombres: document.getElementById('Mantenedoras_contratistas_hombres').value,
+           observaciones_Mantenedoras: observacionesMantenedoras || "",
+
+           // por CARGO Administrativos
+           Administrativo_propios_mujeres: document.getElementById('Administrativo_propios_mujeres').value,
+           Administrativo_contratistas_mujeres: document.getElementById('Administrativo_contratistas_mujeres').value,
+           Administrativo_propios_hombres: document.getElementById('Administrativo_propios_hombres').value,
+           Administrativo_contratistas_hombres: document.getElementById('Administrativo_contratistas_hombres').value,
+           observaciones_Administrativo: observacionesAdministrativo || "",
+
+           //totales por cargo
+           total_cargo_mujeres_propias: mujeresTotalCargoPropios|| "0", // Usamos "0" como valor por defecto si el campo está vacío
+           total_cargo_mujeres_contratistas: mujeresTotalCargoContratistas || "0",
+           total_cargo_hombres_propios: hombresTotalCargoPropios || "0",
+           total_cargo_hombres_contratistas: hombresTotalCargoContratistas || "0",
+
+           // por Profesión minas
+           Ing_minas_propios_mujeres_profesion: document.getElementById('Ing_minas_propios_mujeres_profesion').value,
+           Ing_minas_contratistas_mujeres_profesion: document.getElementById('Ing_minas_contratistas_mujeres_profesion').value,
+           Ing_minas_propios_hombres_profesion: document.getElementById('Ing_minas_propios_hombres_profesion').value,
+           Ing_minas_contratistas_hombres_profesion: document.getElementById('Ing_minas_contratistas_hombres_profesion').value,
+           observaciones_minas: observacionesMinas || "",
+
+           // por metalurgia_quimica minas
+           Ing_metalurgia_quimica_propios_mujeres_profesion: document.getElementById('Ing_metalurgia_quimica_propios_mujeres_profesion').value,
+           Ing_metalurgia_quimica_contratistas_mujeres_profesion: document.getElementById('Ing_metalurgia_quimica_contratistas_mujeres_profesion').value,
+           Ing_metalurgia_quimica_propios_hombres_profesion: document.getElementById('Ing_metalurgia_quimica_propios_hombres_profesion').value,
+           Ing_metalurgia_quimica_contratistas_hombres_profesion: document.getElementById('Ing_metalurgia_quimica_contratistas_hombres_profesion').value,
+           observaciones_metalurgia_quimica: observacionesMetalurgiaQuimica || "",
+
+           // por electrica_mecanica
+           Ing_electrica_mecanica_propios_mujeres_profesion: document.getElementById('Ing_electrica_mecanica_propios_mujeres_profesion').value,
+           Ing_electrica_mecanica_contratistas_mujeres_profesion: document.getElementById('Ing_electrica_mecanica_contratistas_mujeres_profesion').value,
+           Ing_electrica_mecanica_propios_hombres_profesion: document.getElementById('Ing_electrica_mecanica_propios_hombres_profesion').value,
+           Ing_electrica_mecanica_contratistas_hombres_profesion: document.getElementById('Ing_electrica_mecanica_contratistas_hombres_profesion').value,
+           observaciones_electrica_mecanica: observacionesElectricaMecanica || "",
+
+           // _industrial_comercial
+           Ing_industrial_comercial_propios_mujeres_profesion: document.getElementById('Ing_industrial_comercial_propios_mujeres_profesion').value,
+           Ing_industrial_comercial_contratistas_mujeres_profesion: document.getElementById('Ing_industrial_comercial_contratistas_mujeres_profesion').value,
+           Ing_industrial_comercial_propios_hombres_profesion: document.getElementById('Ing_industrial_comercial_propios_hombres_profesion').value,
+           Ing_industrial_comercial_contratistas_hombres_profesion: document.getElementById('Ing_industrial_comercial_contratistas_hombres_profesion').value,
+           observaciones_industrial_comercial: observacionesIndustrialComercial || "",
+
+           // otras ingenierias
+           otras_ingenierias_propios_mujeres_profesion: document.getElementById('otras_ingenierias_propios_mujeres_profesion').value,
+           otras_ingenierias_contratistas_mujeres_profesion: document.getElementById('otras_ingenierias_contratistas_mujeres_profesion').value,
+           otras_ingenierias_propios_hombres_profesion: document.getElementById('otras_ingenierias_propios_hombres_profesion').value,
+           otras_ingenierias_contratistas_hombres_profesion: document.getElementById('otras_ingenierias_contratistas_hombres_profesion').value,
+           observaciones_otras_ingenierias: observacionesOtrasIngenierias || "",
+
+           // carreras tecnicas
+           carreras_tecnicas_propios_mujeres_profesion: document.getElementById('carreras_tecnicas_propios_mujeres_profesion').value,
+           carreras_tecnicas_contratistas_mujeres_profesion: document.getElementById('carreras_tecnicas_contratistas_mujeres_profesion').value,
+           carreras_tecnicas_propios_hombres_profesion: document.getElementById('carreras_tecnicas_propios_hombres_profesion').value,
+           carreras_tecnicas_contratistas_hombres_profesion: document.getElementById('carreras_tecnicas_contratistas_hombres_profesion').value,
+           observaciones_carreras_tecnicas: observacionesCarrerasTecnicas || "",
+
+           // otras carreras
+           otras_carreras_propios_mujeres_profesion: document.getElementById('otras_carreras_propios_mujeres_profesion').value,
+           otras_carreras_contratistas_mujeres_profesion: document.getElementById('otras_carreras_contratistas_mujeres_profesion').value,
+           otras_carreras_propios_hombres_profesion: document.getElementById('otras_carreras_propios_hombres_profesion').value,
+           otras_carreras_contratistas_hombres_profesion: document.getElementById('otras_carreras_contratistas_hombres_profesion').value,
+           observaciones_otras_carreras: observacionesOtrasCarreras || "",
+
+           // sin carreras
+           sin_profesion_propios_mujeres_profesion: document.getElementById('sin_profesion_propios_mujeres_profesion').value,
+           sin_profesion_contratistas_mujeres_profesion: document.getElementById('sin_profesion_contratistas_mujeres_profesion').value,
+           sin_profesion_propios_hombres_profesion: document.getElementById('sin_profesion_propios_hombres_profesion').value,
+           sin_profesion_contratistas_hombres_profesion: document.getElementById('sin_profesion_contratistas_hombres_profesion').value,
+           observaciones_sin_profesion: observacionesSinProfesion || "",
+
+           //totales por cargo
+           total_propios_mujeres_profesion: mujeresTotalProfesionPropios|| "0", // Usamos "0" como valor por defecto si el campo está vacío
+           total_contratistas_mujeres_profesion: mujeresTotalProfesionContratistas || "0",
+           total_propios_hombres_profesion: hombresTotalProfesionPropios || "0",
+           total_contratistas_hombres_profesion: hombresTotalProfesionContratistas || "0",
+
+           // sin estudio
+           sin_estudios_propios_mujeres: document.getElementById('sin_estudios_propios_mujeres').value,
+           sin_estudios_contratistas_mujeres: document.getElementById('sin_estudios_contratistas_mujeres').value,
+           sin_estudios_propios_hombres: document.getElementById('sin_estudios_propios_hombres').value,
+           sin_estudios_contratistas_hombres: document.getElementById('sin_estudios_contratistas_hombres').value,
+           observaciones_sin_estudios: observacionesSinEstudios || "",
+
+           // estudios medios
+           Estudios_Media_propios_mujeres: document.getElementById('Estudios_Media_propios_mujeres').value,
+           Estudios_Media_contratistas_mujeres: document.getElementById('Estudios_Media_contratistas_mujeres').value,
+           Estudios_Media_propios_hombres: document.getElementById('Estudios_Media_propios_hombres').value,
+           Estudios_Media_contratistas_hombres: document.getElementById('Estudios_Media_contratistas_hombres').value,
+           observaciones_Estudios_Media: observacionesEstudiosMedia || "",
+
+           // carreras tecnicas
+           Personas_Carreras_tecnicas_propios_mujeres: document.getElementById('Personas_Carreras_tecnicas_propios_mujeres').value,
+           Personas_Carreras_tecnicas_contratistas_mujeres: document.getElementById('Personas_Carreras_tecnicas_contratistas_mujeres').value,
+           Personas_Carreras_tecnicas_propios_hombres: document.getElementById('Personas_Carreras_tecnicas_propios_hombres').value,
+           Personas_Carreras_tecnicas_contratistas_hombres: document.getElementById('Personas_Carreras_tecnicas_contratistas_hombres').value,
+           observaciones_Personas_Carreras_tecnicas: observacionesPersonasCarrerasTecnicas || "",
+
+           // carreras proefesionales
+           Personas_Carreras_profesionales_propios_mujeres: document.getElementById('Personas_Carreras_profesionales_propios_mujeres').value,
+           Personas_Carreras_profesionales_contratistas_mujeres: document.getElementById('Personas_Carreras_profesionales_contratistas_mujeres').value,
+           Personas_Carreras_profesionales_propios_hombres: document.getElementById('Personas_Carreras_profesionales_propios_hombres').value,
+           Personas_Carreras_profesionales_contratistas_hombres: document.getElementById('Personas_Carreras_profesionales_contratistas_hombres').value,
+           observaciones_Personas_Carreras_profesionales: observacionesPersonasCarrerasProfesionales || "",
+
+           // carreras post grado
+           Personas_PostGrado_maestrias_doctorados_MBA_propios_mujeres: document.getElementById('Personas_PostGrado_maestrias_doctorados_MBA_propios_mujeres').value,
+           Personas_PostGrado_maestrias_doctorados_MBA_contratistas_mujeres: document.getElementById('Personas_PostGrado_maestrias_doctorados_MBA_contratistas_mujeres').value,
+           Personas_PostGrado_maestrias_doctorados_MBA_propios_hombres: document.getElementById('Personas_PostGrado_maestrias_doctorados_MBA_propios_hombres').value,
+           Personas_PostGrado_maestrias_doctorados_MBA_contratistas_hombres: document.getElementById('Personas_PostGrado_maestrias_doctorados_MBA_contratistas_hombres').value,
+           observaciones_PostGrado: observacionesPostGrado || "",
+
+           //totales por ESCOLARIDAD
+           total_escolaridad_propios_mujeres: mujeresTotalEscolaridadPropios|| "0", // Usamos "0" como valor por defecto si el campo está vacío
+           total_escolaridad_contratistas_mujeres: mujeresTotalEscolaridadContratistas || "0",
+           total_escolaridad_propios_hombres: hombresTotalEscolaridadPropios || "0",
+           total_escolaridad_contratistas_hombres: hombresTotalEscolaridadContratistas || "0",
+
+
+      };
+
+      
+  
+      fetch('guardarSegundaDefinitiva.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(datos)
+      })
+      .then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    // Asumiendo que la operación fue exitosa, muestra el mensaje y redirige.
+    alert('¡Muchas gracias por responder!');
+    window.location.href = 'encuestaPrueba.html'; // Cambia la URL actual por la de la encuesta.
+      })
+      .catch((error) => {
+          // Manejar errores de la red o del servidor aquí
+          console.error('Error:', error);
+          alert('Ocurrió un error al enviar los datos.');
+      });
+        }
+  
+    
+    
+  </script>
+
+ 
+  <!-- Bootstrap JS y sus dependencias (Popper y Tether) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js">  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js">  </script>
+
+</body><br>
+<br>
+<br>
+</html>
+

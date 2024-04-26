@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+#registration-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form-section {
+    display: none;
+}
+.form-section.active {
+    display: block;
+}
+#step-indicator {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+#step-indicator li {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    color: #6c757d;
+}
+#step-indicator li.active {
+    color: #007bff;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.priority-table th, .priority-table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+  .priority-table .low-priority {
+    background-color: #ffcccc; /* Rojo claro */
+  }
+  .priority-table .priority-1 {
+    background-color: #ff6666; /* Rojo */
+  }
+  .priority-table .priority-2 {
+    background-color: #ffcc66; /* Naranja */
+  }
+  .priority-table .priority-3 {
+    background-color: #ffff66; /* Amarillo */
+  }
+  .priority-table .priority-4 {
+    background-color: #ccff66; /* Verde claro */
+  }
+  .priority-table .priority-5 {
+    background-color: #66cc66; /* Verde */
+  }
+  .priority-table .high-priority {
+    background-color: #66cc66; /* Verde */
+  }

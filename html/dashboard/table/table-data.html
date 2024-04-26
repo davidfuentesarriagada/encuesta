@@ -1,0 +1,335 @@
+
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Formulario de Evaluación - Cadena de Valor Minero</title>
+      
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="../../assets/images/favicon.ico" />
+      
+      <!-- Library / Plugin Css Build -->
+      <link rel="stylesheet" href="../../assets/css/core/libs.min.css" />
+      
+      
+      <!-- Hope Ui Design System Css -->
+      <link rel="stylesheet" href="../../assets/css/hope-ui.min.css?v=2.0.0" />
+      
+      <!-- Custom Css -->
+      <link rel="stylesheet" href="../../assets/css/custom.min.css?v=2.0.0" />
+      
+    
+      
+      <!-- Customizer Css -->
+      <link rel="stylesheet" href="../../assets/css/customizer.min.css" />
+      
+      <!-- RTL Css -->
+      <link rel="stylesheet" href="../../assets/css/rtl.min.css"/>
+      
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+
+        <!-- jQuery -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <!-- DataTables -->
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+        <!-- DataTables Responsive -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap5.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap5.min.js"></script>
+
+
+        
+    <style>
+        /* Aquí puedes agregar estilos personalizados */
+        .dataTable th, .dataTable td {
+        padding: 10px; /* Espaciado en celdas */
+        border-bottom: 1px solid #e3e6f0; /* Borde para separar filas */
+        }
+        .dataTable thead th {
+        background-color: #f8f9fc; /* Color de fondo para el encabezado */
+        }
+        .dataTable tbody tr:nth-of-type(odd) {
+        background-color: #f8f9fc; /* Color de fondo para filas alternas */
+        }
+    </style>
+      
+      
+  </head>
+  <body class="  ">
+    
+    
+    <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
+        <div class="sidebar-header d-flex align-items-center justify-content-start">
+            <a href="../../dashboard/table/primera.html" class="navbar-brand">
+                <h4 class="logo-title">
+                    AIA <img src="https://www.pruebadyc.cl/AIA.png" style="width: 100px; height: auto;">
+                </h4>
+            </a>
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                <i class="icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </i>
+            </div>
+        </div>
+        <div class="sidebar-body pt-0 data-scrollbar">
+            <div class="sidebar-list">
+                <!-- Sidebar Menu Start -->
+                <ul class="navbar-nav iq-main-menu" id="sidebar-menu">
+                    <li class="nav-item static-item">
+                        <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                            <span class="default-icon">Sisep</span>
+                            <span class="mini-icon">-</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" href="../../dashboard/table/primera.html">
+                            <i class="icon">
+                                <svg width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-20">
+                                    <path opacity="0.4" d="M16.0756 2H19.4616C20.8639 2 22.0001 3.14585 22.0001 4.55996V7.97452C22.0001 9.38864 20.8639 10.5345 19.4616 10.5345H16.0756C14.6734 10.5345 13.5371 9.38864 13.5371 7.97452V4.55996C13.5371 3.14585 14.6734 2 16.0756 2Z" fill="currentColor"></path>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z" fill="currentColor"></path>
+                                </svg>
+                            </i>
+                            <span class="item-name">Formulario</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#horizontal-menu" role="button" aria-expanded="false" aria-controls="horizontal-menu">
+                            
+                            <span class="item-name">Respuestas Formulario</span>
+                            <i class="right-icon">
+                                <svg class="icon-18" xmlns="http://www.w3.org/2000/svg" width="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </i>
+                        </a>
+                        <ul class="sub-nav collapse" id="horizontal-menu" data-bs-parent="#sidebar-menu">
+                            <li class="nav-item">
+                                <a class="nav-link " href="../../dashboard/table/table-data.html">
+                                  <i class="icon">
+                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                            <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                  <i class="sidenav-mini-icon"> H </i>
+                                  <span class="item-name"> Abastecimiento Sostenible en la Minería </span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="../../dashboard/table/table-data2.html">
+                                    <i class="icon">
+                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                            <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon"> D </i>
+                                    <span class="item-name">Caracterización Género</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="../../dashboard/table/table-data3.html">
+                                    <i class="icon svg-icon">
+                                        <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 24 24" fill="currentColor">
+                                            <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                            </g>
+                                        </svg>
+                                    </i>
+                                    <i class="sidenav-mini-icon"> D </i>                   
+                                    <span class="item-name">Políticas de género <br>vinculadas al<br> sector minero</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Sidebar Menu End -->        </div>
+        </div>
+        <div class="sidebar-footer"></div>
+    </aside>    <main class="main-content">
+      <div class="position-relative iq-banner">
+        <!--Nav Start-->
+        <nav class="nav navbar navbar-expand-lg navbar-light iq-navbar">
+          <div class="container-fluid navbar-inner">
+            <a href="../../dashboard/index.html" class="navbar-brand">
+            
+                <h4 class="logo-title">Formulario SICEP</h4>
+            </a>
+            <div class="sidebar-toggle" data-toggle="sidebar" data-active="true">
+                <i class="icon">
+                 <svg  width="20px" class="icon-20" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+                </svg>
+                </i>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
+               
+                <li class="nav-item dropdown">
+                  <a class="py-0 nav-link d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://www.pruebadyc.cl/AIA.png" style="width: 70px; height: auto;">
+                    <img src="https://www.pruebadyc.cl/Marca-AIA.png" style="width: 70px; height: auto;">
+                    <img src="https://www.pruebadyc.cl/cochilco.png" style="width: 70px; height: auto;">
+                    <div class="caption ms-3 d-none d-md-block ">
+                        <h6 class="mb-0 caption-title">Raúl Rodríguez</h6>
+                        <p class="mb-0 caption-sub-title">Sub-gerente SICEP</p>
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="../../dashboard/auth/sign-in.html">Cerrar Sesión</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>          <!-- Nav Header Component Start -->
+        <div class="iq-navbar-header" style="height: 215px;">
+            <div class="container-fluid iq-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="flex-wrap d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1>Hola Raúl</h1>
+                                <h4>Formulario de Evaluación - Cadena de Valor Minero</h4>
+                            </div>
+                              
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="iq-header-img">
+                <img src="../../assets/images/dashboard/top-header.png" alt="header" class="theme-color-default-img img-fluid w-100 h-100 animated-scaleX">
+                 
+            </div>
+        </div>          <!-- Nav Header Component End -->
+        <!--Nav End-->
+    </div>
+    <div class="conatiner-fluid content-inner mt-n5 py-0">
+        <div class="row">
+                
+            <div class="container mt-5">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Resultados de la encuesta de sobre Abastecimiento Sostenible en la Minería</h4>
+                        </div>
+                    </div>
+                    <!-- Envolver la tabla con un div con overflow-auto para permitir el desplazamiento horizontal -->
+                    <div class="card-body overflow-auto">
+                        <table id="example" class="table table-striped w-100">
+                            <thead>
+                                <tr>
+                                    <th>Nombre de la empresa</th>
+                                    <th>RUT</th>
+                                    <th>Cadena Valor Minero</th>
+                                    <th>Categorías de Oferta</th>
+                                    <th>Abastecimiento Sostenible</th>
+                                    <th>Eficiencia de Consumo</th>
+                                    <th>Impactos Ambientales</th>
+                                    <th>Detalles de Impactos Ambientales</th>
+                                    <th>Prioridad Impactos Ambientales</th>
+                                    <th>Prioridad Impactos Sociales</th>
+                                    <th>Cumple Normativa</th>
+                                    <th>Detalles de Normativa</th>
+                                    <th>Informa Prioridades Mineras</th>
+                                    <th>Detalles de Prioridades Mineras</th>
+                                    <th>Alternativa Durable</th>
+                                    <th>Alternativa Eficiencia Energética</th>
+                                    <th>Detalles de Eficiencia Energética</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "ajax": "getData.php",
+                "responsive": true,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                },
+                "columns": [
+                    { "data": "company_name" },
+                    { "data": "company_rut" },
+                    { "data": "cadena_valor_minero" },
+                    { "data": "categorias_oferta" },
+                    { "data": "abastecimiento_sostenible" },
+                    { "data": "eficiencia_consumo" },
+                    { "data": "impactos_ambientales" },
+                    { "data": "impactos_ambientales_detalles" },
+                    { "data": "prioridad_impactos_ambientales" },
+                    { "data": "prioridad_impactos_sociales" },
+                    { "data": "cumple_normativa" },
+                    { "data": "normativa_detalles" },
+                    { "data": "informa_prioridades_mineras" },
+                    { "data": "prioridades_mineras_detalles" },
+                    { "data": "alternativa_durable" },
+                    { "data": "alternativa_eficiencia_energetica" },
+                    { "data": "alternativa_eficiencia_energetica_detalles" }
+                ]
+            });
+        });
+    </script>
+    
+      
+    <!-- Footer Section Start -->
+    
+    <!-- Footer Section End -->    </main>
+   
+  
+    <!-- Library Bundle Script -->
+    <script src="../../assets/js/core/libs.min.js"></script>
+    
+    <!-- External Library Bundle Script -->
+    <script src="../../assets/js/core/external.min.js"></script>
+    
+    <!-- Widgetchart Script -->
+    <script src="../../assets/js/charts/widgetcharts.js"></script>
+    
+    <!-- mapchart Script -->
+    <script src="../../assets/js/charts/vectore-chart.js"></script>
+    <script src="../../assets/js/charts/dashboard.js" ></script>
+    
+    <!-- fslightbox Script -->
+    <script src="../../assets/js/plugins/fslightbox.js"></script>
+    
+    <!-- Settings Script -->
+    <script src="../../assets/js/plugins/setting.js"></script>
+    
+    <!-- Slider-tab Script -->
+    <script src="../../assets/js/plugins/slider-tabs.js"></script>
+    
+    <!-- Form Wizard Script -->
+    <script src="../../assets/js/plugins/form-wizard.js"></script>
+    
+    <!-- AOS Animation Plugin-->
+    
+    <!-- App Script -->
+    <script src="../../assets/js/hope-ui.js" defer></script>
+    
+  </body>
+</html>
